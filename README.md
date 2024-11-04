@@ -1,75 +1,21 @@
-# Nuxt Minimal Starter
+# Ecosphere
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Software required:
 
-## Setup
+- [Git](https://git-scm.com/)
+- [Node JS](https://nodejs.org/en/download/package-manager)
+- [PNPM](https://pnpm.io/fr/installation)
+- [MySQL](https://dev.mysql.com/downloads/installer/)
 
-Make sure to install dependencies:
+# Install project
 
-```bash
-# npm
-npm install
+- Install dependencies
 
-# pnpm
+```
 pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+- Run server
 ```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+pnpm run dev
 ```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
