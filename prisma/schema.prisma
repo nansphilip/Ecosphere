@@ -18,13 +18,10 @@ model User {
 
     dailyChallenge       DailyChallenge[]       @relation("UserToDailyChallenge")
     recommendedChallenge RecommendedChallenge[]
-
     UserChallenge UserChallenge[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-
-    @@map("user")
 }
 
 model DailyChallenge {
@@ -32,7 +29,6 @@ model DailyChallenge {
     name        String
     description String
     difficulty  Int
-    type        String
     points      Int
     image       String?
 
@@ -41,8 +37,6 @@ model DailyChallenge {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-
-    @@map("daily-challenge")
 }
 
 model UserChallenge {
@@ -55,8 +49,6 @@ model UserChallenge {
 
     dailyChallengeId Int
     DailyChallenge   DailyChallenge @relation(fields: [dailyChallengeId], references: [id])
-
-    @@map("userchallenge")
 }
 
 model RecommendedChallenge {
@@ -66,8 +58,6 @@ model RecommendedChallenge {
 
     userId Int
     user   User @relation(fields: [userId], references: [id])
-
-    @@map("recommended_challenges")
 }
 
 model WeeklyChallenge {
@@ -79,8 +69,6 @@ model WeeklyChallenge {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-
-    @@map("weekly-challenge")
 }
 
 model Fruit {
@@ -91,6 +79,4 @@ model Fruit {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-
-    @@map("fruit")
 }
