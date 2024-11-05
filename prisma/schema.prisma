@@ -1,4 +1,4 @@
-generator client {
+generator client_js {
     provider = "prisma-client-js"
 }
 
@@ -8,17 +8,83 @@ datasource db {
 }
 
 model User {
-    id        Int    @id @default(autoincrement())
-    firstname String
-    lastname  String
-    email     String @unique
-    password  String
+    id       Int    @id @default(autoincrement())
+    username String @unique
+    password String
+    points   Int
+
+    friendWith User[] @relation("UserFriends")
+    friendOf   User[] @relation("UserFriends")
+
+    dailyChallenge       DailyChallenge[]       @relation("UserToDailyChallenge")
+    recommendedChallenge RecommendedChallenge[]
+
+    UserChallenge UserChallenge[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 
     @@map("user")
 }
 
+model DailyChallenge {
+    id          Int     @id @default(autoincrement())
+    name        String
+    description String
+    difficulty  Int
+    type        String
+    points      Int
+    image       String?
+
+    userIdList    User[]          @relation("UserToDailyChallenge")
+    UserChallenge UserChallenge[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("daily-challenge")
+}
+
+model UserChallenge {
+    id            Int      @id @default(autoincrement())
+    success       Boolean
+    dateCompleted DateTime
+
+    userId Int
+    User   User @relation(fields: [userId], references: [id])
+
+    dailyChallengeId Int
+    DailyChallenge   DailyChallenge @relation(fields: [dailyChallengeId], references: [id])
+
+    @@map("userchallenge")
+}
+
+model RecommendedChallenge {
+    id              Int      @id @default(autoincrement())
+    challengeName   String
+    dateRecommended DateTime @default(now())
+
+    userId Int
+    user   User @relation(fields: [userId], references: [id])
+
+    @@map("recommended_challenges")
+}
+
+model WeeklyChallenge {
+    id          Int     @id @default(autoincrement())
+    name        String
+    description String
+    points      Int
+    image       String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("weekly-challenge")
+}
+
 model Fruit {
-    id          Int    @id @default(autoincrement())
+    id          Int     @id @default(autoincrement())
     name        String
     description String
     image       String?
