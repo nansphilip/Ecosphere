@@ -91,7 +91,7 @@ const usernameRegister = ref("");
 const passwordRegister = ref("");
 const loadingRegister = ref(false);
 
-const Login = async () => {
+const Register = async () => {
     // Start loading
     loadingLogin.value = true;
 
