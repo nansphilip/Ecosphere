@@ -4,7 +4,7 @@
     <div class="filtre-container">
       <ul>
         <li><a href="#">Classement mondial</a></li>
-        <li><a href="#">Mes amis</a></li>
+        <li><a href="/tropheeAmi">Mes amis</a></li>
       </ul>
     </div>
     <table style="border-collapse: collapse; width: 100%">
