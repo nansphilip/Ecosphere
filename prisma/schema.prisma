@@ -13,12 +13,74 @@ model User {
     password String
     points   Int
 
-    friendWith User[] @relation("UserFriends")
-    friendOf   User[] @relation("UserFriends")
+    friends String
 
-    dailyChallenge       DailyChallenge[]       @relation("UserToDailyChallenge")
-    recommendedChallenge RecommendedChallenge[]
-    UserChallenge UserChallenge[]
+    // Many to One
+    daily       DailyUser[]
+    weekly      WeeklyUser[]
+    recommended RecommendedChallenge[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model WeeklyUser {
+    status Boolean
+    date   DateTime
+
+    // One to Many
+    userId Int
+    User   User @relation(fields: [userId], references: [id])
+
+    // One to Many
+    weeklyChallengeId Int
+    WeeklyChallenge   WeeklyChallenge @relation(fields: [weeklyChallengeId], references: [id])
+
+    @@id([userId, weeklyChallengeId])
+}
+
+model DailyUser {
+    status Boolean
+    date   DateTime
+
+    // One to Many
+    userId Int
+    User   User @relation(fields: [userId], references: [id])
+
+    // One to Many
+    dailyChallengeId Int
+    DailyChallenge   DailyChallenge @relation(fields: [dailyChallengeId], references: [id])
+
+    @@id([userId, dailyChallengeId])
+}
+
+model RecommendedChallenge {
+    date DateTime
+
+    // One to Many
+    userId Int
+    user   User @relation(fields: [userId], references: [id])
+
+    // One to Many
+    dailyChallengeId Int
+    DailyChallenge   DailyChallenge @relation(fields: [dailyChallengeId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@id([userId, dailyChallengeId])
+}
+
+model WeeklyChallenge {
+    id          Int     @id @default(autoincrement())
+    name        String
+    description String
+    difficulty  Int
+    points      Int
+    image       String?
+
+    // Many to One
+    WeeklyUser WeeklyUser[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -32,40 +94,19 @@ model DailyChallenge {
     points      Int
     image       String?
 
-    userIdList    User[]          @relation("UserToDailyChallenge")
-    UserChallenge UserChallenge[]
+    // Many to One
+    DailyUser            DailyUser[]
+    RecommendedChallenge RecommendedChallenge[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
 
-model UserChallenge {
-    id            Int      @id @default(autoincrement())
-    success       Boolean
-    dateCompleted DateTime
-
-    userId Int
-    User   User @relation(fields: [userId], references: [id])
-
-    dailyChallengeId Int
-    DailyChallenge   DailyChallenge @relation(fields: [dailyChallengeId], references: [id])
-}
-
-model RecommendedChallenge {
-    id              Int      @id @default(autoincrement())
-    challengeName   String
-    dateRecommended DateTime @default(now())
-
-    userId Int
-    user   User @relation(fields: [userId], references: [id])
-}
-
-model WeeklyChallenge {
-    id          Int     @id @default(autoincrement())
-    name        String
-    description String
-    points      Int
-    image       String?
+model Article {
+    id    Int     @id @default(autoincrement())
+    title String
+    image String?
+    text  Json
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
