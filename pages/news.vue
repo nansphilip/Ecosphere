@@ -1,33 +1,161 @@
 <template>
-  <div class="connexion-container">
-    <Header />
-    <div>
+  <Header />
+  <div class="page-container">
+    <div class="challenges">
       <ul>
         <li>
-          <span>Défi de la semaine : </span>Ramasser 30 bouteilles en plastique
-          dans la rue
+          <input
+            type="checkbox"
+            v-model="isWeeklyChallengeDone"
+            class="custom-checkbox"
+          />
+          <div class="challenge-content">
+            <span class="highlight">Défi de la semaine :</span>
+            <p class="challenge-text">{{ defiSemaine }}</p>
+          </div>
         </li>
         <li>
-          <span>Défi de la semaine : </span>Se laver les dents sans laisser
-          couler l'eau
+          <input
+            type="checkbox"
+            v-model="isDailyChallengeDone"
+            class="custom-checkbox"
+          />
+          <div class="challenge-content">
+            <span class="highlight">Défi du jour :</span>
+            <p class="challenge-text">{{ defiJour }}</p>
+          </div>
         </li>
       </ul>
     </div>
-    <Footer />
+
+    <main class="main-content">
+      <h2>Actualités</h2>
+      <div class="news-grid">
+        <div class="news-item" v-for="i in 6" :key="i">
+          <p>Lorem ipsum dolor</p>
+        </div>
+      </div>
+    </main>
   </div>
+  <Footer />
 </template>
 
 <script lang="ts" setup>
-useHead({
-  title: "Login - Ecosphere",
-  meta: [{ name: "description", content: "This is the login page" }],
-});
+import { ref } from "vue";
+
+const defiSemaine = "Ramasser 30 bouteilles en plastique dans la rue";
+const defiJour = "Se laver les dents sans laisser couler l'eau";
+
+const isWeeklyChallengeDone = ref(false);
+const isDailyChallengeDone = ref(false);
 </script>
+
 <style scoped>
-.connexion-container {
-  height: 100%;
+.page-container {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  color: #204b35;
+  margin-bottom: 27px;
+  height: 100%;
+}
+
+.challenges {
+  background-color: #2e563f;
+  color: white;
+  width: 90%;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.challenges ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.challenges li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.challenges li:last-child {
+  margin-bottom: 0;
+}
+
+.custom-checkbox {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 3px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.custom-checkbox:checked {
+  background-color: #85dd72;
+  border-color: white;
+}
+
+.custom-checkbox:checked::after {
+  content: "✔";
+  color: white;
+  font-size: 14px;
+  position: absolute;
+  top: -1px;
+  left: 3px;
+}
+
+.challenge-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.highlight {
+  font-weight: bold;
+  color: #85dd72;
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+
+.challenge-text {
+  font-size: 0.8em;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.main-content {
+  width: 90%;
+  text-align: center;
+}
+
+.main-content h2 {
+  font-size: 1.8em;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.news-item {
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  font-size: 0.9em;
+  color: #333;
 }
 </style>
