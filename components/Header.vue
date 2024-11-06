@@ -7,14 +7,17 @@
     </div>
     <a href="#"
       ><span class="points"
-        ><span class="points-typo">{{ pointsCounter }}</span>
+        ><span class="points-typo">{{ user.points }}</span>
         <img src="/public/imgs/coeurfeuille.png" alt="feuille icon" /></span
     ></a>
   </div>
 </template>
 
 <script lang="ts" setup>
-const pointsCounter = ref("1000");
+const user = reactive({
+  pseudo: "Michel",
+  points: 3659,
+});
 </script>
 
 <style scoped>
