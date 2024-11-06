@@ -1,15 +1,15 @@
 <template>
   <nav class="footer-container flex flex-row gap-4 justify-center">
-    <NuxtLink to="#"
+    <NuxtLink to="/news"
       ><img src="/public/imgs/home.png" alt="logo home"
     /></NuxtLink>
-    <NuxtLink to="#"
+    <NuxtLink to="/defi"
       ><img src="/public/imgs/target.png" alt="logo defi"
     /></NuxtLink>
-    <NuxtLink to="#"
+    <NuxtLink to="/trophee"
       ><img src="/public/imgs/trophee.png" alt="logo trophee"
     /></NuxtLink>
-    <NuxtLink to="#"
+    <NuxtLink to="/account"
       ><img src="/public/imgs/user.png" alt="logo account"
     /></NuxtLink>
   </nav>

@@ -608,7 +608,7 @@ export const dailyUserData: {
         dailyChallengeId: 1,
     },
     {
-        status: false,
+        status: true,
         date: today,
         userId: 2,
         dailyChallengeId: 2,
@@ -620,7 +620,7 @@ export const dailyUserData: {
         dailyChallengeId: 3,
     },
     {
-        status: false,
+        status: true,
         date: today,
         userId: 4,
         dailyChallengeId: 4,
@@ -632,7 +632,7 @@ export const dailyUserData: {
         dailyChallengeId: 5,
     },
     {
-        status: false,
+        status: true,
         date: today,
         userId: 6,
         dailyChallengeId: 6,
@@ -644,7 +644,7 @@ export const dailyUserData: {
         dailyChallengeId: 7,
     },
     {
-        status: false,
+        status: true,
         date: today,
         userId: 8,
         dailyChallengeId: 8,
@@ -656,13 +656,13 @@ export const dailyUserData: {
         dailyChallengeId: 9,
     },
     {
-        status: false,
+        status: true,
         date: today,
         userId: 10,
         dailyChallengeId: 10,
     },
     {
-        status: false,
+        status: true,
         date: today,
         userId: 11,
         dailyChallengeId: 11,
@@ -680,7 +680,7 @@ export const dailyUserData: {
         dailyChallengeId: 13,
     },
     {
-        status: false,
+        status: true,
         date: today,
         userId: 14,
         dailyChallengeId: 14,
@@ -692,13 +692,13 @@ export const dailyUserData: {
         dailyChallengeId: 15,
     },
     {
-        status: false,
+        status: true,
         date: today,
         userId: 16,
         dailyChallengeId: 16,
     },
     {
-        status: false,
+        status: true,
         date: today,
         userId: 17,
         dailyChallengeId: 17,
@@ -710,7 +710,7 @@ export const dailyUserData: {
         dailyChallengeId: 18,
     },
     {
-        status: false,
+        status: true,
         date: today,
         userId: 19,
         dailyChallengeId: 19,
@@ -731,7 +731,7 @@ export const weeklyUserData: {
 }[] = [
     // Association de chaque utilisateur avec un défi hebdomadaire
     {
-        status: false,
+        status: true,
         date: today,
         userId: 1,
         weeklyChallengeId: 1,
@@ -749,7 +749,7 @@ export const weeklyUserData: {
         weeklyChallengeId: 3,
     },
     {
-        status: false,
+        status: true,
         date: today,
         userId: 4,
         weeklyChallengeId: 4,
@@ -761,7 +761,7 @@ export const weeklyUserData: {
         weeklyChallengeId: 5,
     },
     {
-        status: false,
+        status: true,
         date: today,
         userId: 6,
         weeklyChallengeId: 6,
@@ -779,7 +779,7 @@ export const weeklyUserData: {
         weeklyChallengeId: 8,
     },
     {
-        status: false,
+        status: true,
         date: today,
         userId: 9,
         weeklyChallengeId: 9,
@@ -797,7 +797,7 @@ export const weeklyUserData: {
         weeklyChallengeId: 11,
     },
     {
-        status: false,
+        status: true,
         date: today,
         userId: 12,
         weeklyChallengeId: 12,
@@ -815,7 +815,7 @@ export const weeklyUserData: {
         weeklyChallengeId: 14,
     },
     {
-        status: false,
+        status: true,
         date: today,
         userId: 15,
         weeklyChallengeId: 15,
@@ -827,7 +827,7 @@ export const weeklyUserData: {
         weeklyChallengeId: 16,
     },
     {
-        status: false,
+        status: true,
         date: today,
         userId: 17,
         weeklyChallengeId: 17,
@@ -845,7 +845,7 @@ export const weeklyUserData: {
         weeklyChallengeId: 19,
     },
     {
-        status: false,
+        status: true,
         date: today,
         userId: 20,
         weeklyChallengeId: 20,
