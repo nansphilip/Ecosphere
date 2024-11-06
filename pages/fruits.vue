@@ -8,7 +8,7 @@ useHead({
 })
 
 // Fetch fruits from database
-const { data: fruits } = await useFetch('/api/fruits');
+const { data: fruits } = await useFetch('/api/get-every-fruit');
 
 // Input form values
 const name = ref('');

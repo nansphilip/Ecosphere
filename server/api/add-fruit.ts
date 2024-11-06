@@ -1,12 +1,8 @@
-import { AddFruit } from "~/composables/api/fruits";
+import { AddFruit } from "~/composables/api/fruit";
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event);
-    const fruit = await AddFruit(body);
+    const newFruit = await AddFruit(body);
 
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(fruit);
-        }, 1000);
-    });
+    return newFruit;
 });
