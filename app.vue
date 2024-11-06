@@ -17,6 +17,9 @@ body {
   background-color: #f0f0f0;
   font-family: "Montserrat", sans-serif;
   .container-phone {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 375px;
     height: 667px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
