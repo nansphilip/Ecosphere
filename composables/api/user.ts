@@ -65,23 +65,21 @@ export const GetUserById = async (props: GetUserByIdProps) => {
     return null;
   }
 
-  return user;
+  const userFormatted = {
+    ...user,
+    daily: {
+      ...user.daily[0],
+      ...user.daily[0].DailyChallenge,
+      AddDailyChallenge: false,
+    },
+    weekly: {
+      ...user.weekly[0],
+      ...user.weekly[0].WeeklyChallenge,
+      AddWeeklyChallenge: false,
+    },
+  };
 
-  // const userFormatted = {
-  //   ...user,
-  //   daily: {
-  //     ...user.daily[0],
-  //     ...user.daily[0].DailyChallenge,
-  //     AddDailyChallenge: false,
-  //   },
-  //   weekly: {
-  //     ...user.weekly[0],
-  //     ...user.weekly[0].WeeklyChallenge,
-  //     AddWeeklyChallenge: false,
-  //   },
-  // };
-
-  // return userFormatted;
+  return userFormatted;
 };
 
 export type GetUserByUsernameProps = {

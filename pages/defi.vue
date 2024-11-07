@@ -19,36 +19,32 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 definePageMeta({
   middleware: "auth",
 });
 useHead({
-  title: "defis - Ecosphere",
+  title: "Defis - Ecosphere",
   meta: [{ name: "description", content: "This is the défis page" }],
 });
 
-const user = ref("");
+const user = ref(null);
 
-const cookie = useCookie("auth_token");
+const cookie = useCookie('auth_token');
 
-// const data = toRaw(cookie.value);
-user.value = cookie.value;
-console.log(user.value.id);
-
-// Send POST request to add fruit
-const dataz = await fetch("/api/get-user-id", {
-  method: "POST",
+const { data: userData, error } = await useFetch('/api/get-user-id', {
+  method: 'POST',
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
-  body: JSON.stringify({
-    id: user.value.id,
-  }),
+  body: {
+    id: cookie.value.id,
+  },
 });
 
-const newFruit = await dataz.json();
-console.log(newFruit);
+if (userData.value) {
+  user.value = userData.value;
+}
 
 const dailyChallenge = ref(`Eteindre l'eau en se brossant les dents`);
 const weeklyChallenge = ref("Ramasser 100 bouteilles en plastique");
