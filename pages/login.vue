@@ -100,7 +100,6 @@ const Login = async () => {
       // User created
       const userToken = await response.json();
       authToken.value = userToken;
-      console.log("LOGIN" + userToken);
       // Redirect
       router.push("/");
     } else {

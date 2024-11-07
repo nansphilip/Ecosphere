@@ -17,8 +17,5 @@ export default defineEventHandler(async (event) => {
   // Check password
   const arePasswordSame = await ComparePassword({ password, hashedPassword });
 
-  return {
-    status: "success",
-    data: arePasswordSame ? user : null,
-  };
+  return arePasswordSame ? user : null;
 });

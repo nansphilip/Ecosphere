@@ -28,24 +28,15 @@ useHead({
   meta: [{ name: "description", content: "This is the défis page" }],
 });
 
-const userToken = useCookie("auth_token");
+const user = ref("");
 
-const data = userToken;
+const { value: cookie } = useCookie("auth_token");
 
-// if (userToken.value) {
-//   console.log("Token trouvé :", userToken.value.data);
-// } else {
-//   console.log("Aucun token trouvé.");
-// }
-
-// Si le cookie contient des données JSON, il faut le parser
-if (userToken.value) {
-  try {
-    const parsedData = JSON.parse(userToken.value);
-    console.log("Données du cookie:", parsedData);
-  } catch (error) {
-    console.error("Erreur de parsing du cookie:", error);
-  }
+const data = toRaw(cookie);
+if (data) {
+  console.log(data.id);
+} else {
+  console.log("Aucun token trouvé.");
 }
 
 const dailyChallenge = ref(`Eteindre l'eau en se brossant les dents`);
