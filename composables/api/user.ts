@@ -27,23 +27,6 @@ export const GetUserById = async (props: GetUserByIdProps) => {
     where: {
       id,
     },
-  });
-  if (!user) {
-    return null;
-  }
-  return user;
-};
-
-export type GetUserByUsernameProps = {
-  username: string;
-};
-
-export const GetUserByUsername = async (props: GetUserByUsernameProps) => {
-  const { username } = props;
-  const user = await prisma.user.findUnique({
-    where: {
-      username,
-    },
     include: {
       daily: {
         select: {
@@ -82,21 +65,45 @@ export const GetUserByUsername = async (props: GetUserByUsernameProps) => {
     return null;
   }
 
-  const userFormatted = {
-    ...user,
-    daily: {
-      ...user.daily[0],
-      ...user.daily[0].DailyChallenge,
-      AddDailyChallenge: false,
-    },
-    weekly: {
-      ...user.weekly[0],
-      ...user.weekly[0].WeeklyChallenge,
-      AddWeeklyChallenge: false,
-    },
-  };
+  return user;
 
-  return userFormatted;
+  // const userFormatted = {
+  //   ...user,
+  //   daily: {
+  //     ...user.daily[0],
+  //     ...user.daily[0].DailyChallenge,
+  //     AddDailyChallenge: false,
+  //   },
+  //   weekly: {
+  //     ...user.weekly[0],
+  //     ...user.weekly[0].WeeklyChallenge,
+  //     AddWeeklyChallenge: false,
+  //   },
+  // };
+
+  // return userFormatted;
+};
+
+export type GetUserByUsernameProps = {
+  username: string;
+};
+
+export const GetUserByUsername = async (props: GetUserByUsernameProps) => {
+  const { username } = props;
+  const user = await prisma.user.findUnique({
+    select: {
+      id: true,
+      username: true,
+      password: true,
+    },
+    where: {
+      username,
+    },
+  });
+  if (!user) {
+    return null;
+  }
+  return user;
 };
 
 export const GetEveryUser = async () => {

@@ -3,9 +3,9 @@
     <Header />
     <div class="challenge-in-progress">
       <h3>Défi Quotidien</h3>
-      <button>{{ dailyChallenge }}</button>
+      <button>{{ user.daily.name }}</button>
       <h3>Défi Hebdomadaire</h3>
-      <button>{{ weeklyChallenge }}</button>
+      <button>{{ user.weekly.name }}</button>
     </div>
     <div class="challenge-finished">
       <h3>Défis terminés</h3>
@@ -19,7 +19,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 definePageMeta({
   middleware: "auth",
 });
@@ -32,8 +32,23 @@ const user = ref("");
 
 const cookie = useCookie("auth_token");
 
-const data = toRaw(cookie.value);
-console.log(data.password);
+// const data = toRaw(cookie.value);
+user.value = cookie.value;
+console.log(user.value.id);
+
+// Send POST request to add fruit
+const dataz = await fetch("/api/get-user-id", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    id: user.value.id,
+  }),
+});
+
+const newFruit = await dataz.json();
+console.log(newFruit);
 
 const dailyChallenge = ref(`Eteindre l'eau en se brossant les dents`);
 const weeklyChallenge = ref("Ramasser 100 bouteilles en plastique");
