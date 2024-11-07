@@ -5,29 +5,15 @@
       <ul>
         <li><a href="/trophee">Classement mondial</a></li>
         <li>
-          <a
-            href="#"
-            :class="{ active: activeTab === 'friends' }"
-            @click="switchTab('friends')"
-            >Mes amis</a
-          >
+          <a href="#" :class="{ active: activeTab === 'friends' }" @click="switchTab('friends')">Mes amis</a>
         </li>
       </ul>
       <div v-if="activeTab === 'friends'" class="autocomplete-container">
-        <input
-          type="text"
-          v-model="searchQuery"
-          @input="fetchSuggestions"
-          placeholder="ajouter un ami..."
-          class="autocomplete-input"
-        />
+        <input type="text" v-model="searchQuery" @input="fetchSuggestions" placeholder="ajouter un ami..."
+          class="autocomplete-input" />
         <!-- Affiche la liste des suggestions si elle n'est pas vide -->
         <div v-if="suggestions.length" class="suggestions-overlay">
-          <div
-            v-for="user in suggestions"
-            :key="user.id"
-            class="suggestion-item"
-          >
+          <div v-for="user in suggestions" :key="user.id" class="suggestion-item">
             <span>{{ user.username }}</span>
             <button @click="addFriend(user)">ajouter</button>
           </div>
@@ -36,10 +22,7 @@
     </div>
 
     <!-- Affiche la table uniquement si aucune suggestion n'est disponible -->
-    <table
-      v-if="activeTab === 'friends' && !suggestions.length"
-      class="leaderboard-table"
-    >
+    <table v-if="activeTab === 'friends' && !suggestions.length" class="leaderboard-table">
       <thead>
         <tr>
           <th>Rang</th>
@@ -50,11 +33,7 @@
       <tbody>
         <tr v-for="(user, index) in sortedFriends" :key="user.id">
           <td v-if="index + 1 <= 3">
-            <img
-              :src="getMedalImage(index + 1)"
-              :alt="`medaille de rang ${index + 1}`"
-              class="medals"
-            />
+            <img :src="getMedalImage(index + 1)" :alt="`medaille de rang ${index + 1}`" class="medals" />
           </td>
           <td v-else>{{ index + 1 }}</td>
           <td>{{ user.username }}</td>
@@ -111,12 +90,10 @@ const activeTab = ref("friends");
 const searchQuery = ref("");
 const suggestions = ref([]);
 
-const filteredFriends = () => {
-  return allUsers.value.filter((user) =>
-    friendList.value.some((friend) => user.id !== friend.id)
-  );
-};
-console.log(filteredFriends);
+
+const filteredFriends = allUsers.value.filter((user) =>
+  friendList.value.some((friend) => user.id === friend.id) || cookie.value.id === user.id
+);
 
 const sortedFriends = computed(() => {
   return filteredFriends.sort((a, b) => b.points - a.points);
@@ -125,7 +102,7 @@ const sortedFriends = computed(() => {
 const fetchSuggestions = () => {
   if (searchQuery.value) {
     suggestions.value = allUsers.value.filter((user) =>
-      user.username.toLowerCase().includes(searchQuery.value.toLowerCase())
+      !friendList.value.some((friend) => user.id === friend.id) && cookie.value.id !== user.id
     );
   } else {
     suggestions.value = [];
@@ -198,7 +175,8 @@ const switchTab = (tab) => {
 
 .filtre-container ul li a.active {
   font-weight: bold;
-  border-bottom: 2px solid #333; /* Ligne sous "Mes Amis" */
+  border-bottom: 2px solid #333;
+  /* Ligne sous "Mes Amis" */
 }
 
 .autocomplete-container {
