@@ -30,14 +30,10 @@ useHead({
 
 const user = ref("");
 
-const { value: cookie } = useCookie("auth_token");
+const cookie = useCookie("auth_token");
 
-const data = toRaw(cookie);
-if (data) {
-  console.log(data.id);
-} else {
-  console.log("Aucun token trouvé.");
-}
+const data = toRaw(cookie.value);
+console.log(data.password);
 
 const dailyChallenge = ref(`Eteindre l'eau en se brossant les dents`);
 const weeklyChallenge = ref("Ramasser 100 bouteilles en plastique");
@@ -61,10 +57,12 @@ const listFinishedChallenges = reactive([
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
   h3 {
     font-size: 1.5em;
     font-weight: bold;
   }
+
   .challenge-in-progress {
     display: flex;
     gap: 10px;
@@ -88,6 +86,7 @@ const listFinishedChallenges = reactive([
       background-color: #aeeca1;
     }
   }
+
   .challenge-finished {
     display: flex;
     gap: 10px;
