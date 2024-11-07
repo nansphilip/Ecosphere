@@ -1,217 +1,175 @@
 <template>
-    <div class="connexion-container">
-        <img src="/public/imgs/logo-ecosphere.png" alt="logo ecosphere" />
-        <h1 class="title">ECOSPHERE</h1>
-        <hr />
-        <span class="subtitle">Votre assistant écologique</span>
-        <div class="form-container">
-            <form action="/submit" method="GET">
-                <span>Se connecter</span>
-                <div>
-                    <input v-model="usernameLogin" type="text" id="username" name="username" placeholder="Pseudo"
-                        required />
-                </div>
-                <div>
-                    <input v-model="passwordLogin" type="password" id="password" name="password"
-                        placeholder="Password" />
-                </div>
-                <button v-if="loadingLogin" type="submit" disabled>Chargement...</button>
-                <button v-else type="submit">Connexion</button>
-                <div class="separation">
-                    <hr />
-                </div>
-            </form>
-            <form action="/submit" method="POST">
-                <span>S'inscrire</span>
-                <div>
-                    <input v-model="usernameRegister" type="text" id="username" name="username" placeholder="Pseudo"
-                        required />
-                </div>
-                <div>
-                    <input v-model="passwordRegister" type="password" id="password" name="password"
-                        placeholder="Password" />
-                </div>
-                <button v-if="loadingRegister" type="submit" disabled>Chargement...</button>
-                <button v-else type="submit">Inscription</button>
-            </form>
-        </div>
+  <div class="news-container">
+    <Header />
+    <div class="challenges">
+      <ul>
+        <li>
+          <input
+            type="checkbox"
+            v-model="isWeeklyChallengeDone"
+            class="custom-checkbox"
+          />
+          <div class="challenge-content">
+            <span class="highlight">Défi de la semaine :</span>
+            <p class="challenge-text">{{ defiSemaine }}</p>
+          </div>
+        </li>
+        <li>
+          <input
+            type="checkbox"
+            v-model="isDailyChallengeDone"
+            class="custom-checkbox"
+          />
+          <div class="challenge-content">
+            <span class="highlight">Défi du jour :</span>
+            <p class="challenge-text">{{ defiJour }}</p>
+          </div>
+        </li>
+      </ul>
     </div>
+
+    <main class="main-content">
+      <h2>Actualités</h2>
+      <div class="news-grid">
+        <div class="news-item" v-for="i in 6" :key="i">
+          <p>Lorem ipsum dolor</p>
+        </div>
+      </div>
+    </main>
+    <Footer />
+  </div>
 </template>
 
 <script lang="ts" setup>
-useHead({
-    title: "Login - Ecosphere",
-    meta: [{ name: "description", content: "This is the login page" }],
-});
+// definePageMeta({
+//   middleware: "auth",
+// });
 
-// Login
-const usernameLogin = ref("");
-const passwordLogin = ref("");
-const loadingLogin = ref(false);
+const defiSemaine = "Ramasser 30 bouteilles en plastique dans la rue";
+const defiJour = "Se laver les dents sans laisser couler l'eau";
 
-const Login = async () => {
-    // Start loading
-    loadingLogin.value = true;
-
-    // Send POST request to login
-    const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            username: usernameLogin.value,
-            password: passwordLogin.value
-        })
-    });
-
-    if (response.ok) {
-        if (response.status) {
-            // User created
-            // Redirect
-        } else {
-            // Can't create user (already exists)
-            // Show a feedback
-
-            // Reset form values
-            usernameLogin.value = '';
-            passwordLogin.value = '';
-        }
-    } else {
-        console.error('Failed to login');
-    }
-
-    // Stop loading
-    loadingLogin.value = false;
-}
-
-
-// Register
-const usernameRegister = ref("");
-const passwordRegister = ref("");
-const loadingRegister = ref(false);
-
-const Register = async () => {
-    // Start loading
-    loadingLogin.value = true;
-
-    // Send POST request to register
-    const response = await fetch('/api/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            username: usernameLogin.value,
-            password: passwordLogin.value
-        })
-    });
-
-    if (response.ok) {
-        if (response.status) {
-            // Valid credentials
-            // Redirect
-        } else {
-            // Invalid credentials
-            // Show a feedback
-
-            // Reset form values
-            usernameRegister.value = '';
-            passwordRegister.value = '';
-        }
-    } else {
-        console.error('Failed to register');
-    }
-
-    // Stop loading
-    loadingLogin.value = false;
-}
+const isWeeklyChallengeDone = ref(false);
+const isDailyChallengeDone = ref(false);
 </script>
 
 <style scoped>
-.connexion-container {
-    display: flex;
-    padding-top: 5px;
-    flex-direction: column;
+.news-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-    align-items: center;
-    background-color: #2e5632;
-    width: 100%;
-    height: 100%;
+.page-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  color: #204b35;
+  margin-bottom: 27px;
+  height: 100%;
+}
 
-    .title {
-        font-size: 1.8em;
-        font-weight: bold;
-        color: #fff;
-    }
+.challenges {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  justify-content: center;
+  background-color: #2e563f;
+  color: white;
+  width: 90%;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
 
-    img {
-        width: 190px;
-    }
+.challenges ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
-    span {
-        color: #fff;
-        font-weight: bold;
-        font-size: 1.2em;
-    }
+.challenges li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
 
-    hr {
-        border: 1px solid #fff;
-        width: 190px;
-        margin-bottom: 5px;
-    }
+.challenges li:last-child {
+  margin-bottom: 0;
+}
 
-    .separation {
-        color: #fff;
-        display: flex;
-        align-items: center;
-        margin-top: 20px;
-    }
+.custom-checkbox {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 3px;
+  position: relative;
+  flex-shrink: 0;
+}
 
-    .subtitle {
-        color: #fff;
-        font-size: 0.7em;
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
+.custom-checkbox:checked {
+  background-color: #85dd72;
+  border-color: white;
+}
 
-    .form-container {
-        background-color: rgba(0, 0, 0, 0.4);
-        border-radius: 15px;
-        padding: 15px;
-    }
+.custom-checkbox:checked::after {
+  content: "✔";
+  color: white;
+  font-size: 14px;
+  position: absolute;
+  top: -1px;
+  left: 3px;
+}
 
-    form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 10px;
+.challenge-content {
+  display: flex;
+  flex-direction: column;
+}
 
-        input {
-            border-radius: 5px;
-            padding-left: 10px;
-            margin: 5px;
-            background-color: rgb(141, 141, 141);
-            color: #2e5632;
-        }
+.highlight {
+  font-weight: bold;
+  color: #85dd72;
+  font-size: 0.85em;
+  white-space: nowrap;
+}
 
-        input::placeholder {
-            color: rgb(214, 214, 214);
-            font-size: 0.8em;
-            font-weight: bold;
-        }
+.challenge-text {
+  font-size: 0.8em;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.4;
+  margin: 0;
+}
 
-        button {
-            border-radius: 20px;
-            background-color: #2e5632;
-            color: #fff;
-            font-weight: bold;
-            width: 130px;
-            height: 28px;
-            font-size: 0.8em;
-            margin: 5px;
-        }
-    }
+.main-content {
+  width: 90%;
+  text-align: center;
+  align-self: center;
+}
+
+.main-content h2 {
+  font-size: 1.8em;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.news-item {
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  font-size: 0.9em;
+  color: #333;
 }
 </style>

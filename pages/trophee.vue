@@ -84,6 +84,9 @@
 </template>
 
 <script setup>
+// definePageMeta({
+//   middleware: "auth",
+// });
 useHead({
   title: "trophee - Ecosphere",
   meta: [{ name: "description", content: "This is the trophee's page" }],
@@ -91,68 +94,8 @@ useHead({
 
 const { data: userList } = await useFetch("/api/get-every-user");
 
-console.log(userList.value);
-
-// const listUsersTrophees = [
-//   {
-//     id: 1,
-//     userName: "Marie",
-//     trophees: 1000,
-//   },
-//   {
-//     id: 2,
-//     userName: "JP",
-//     trophees: 750,
-//   },
-//   {
-//     id: 3,
-//     userName: "Sébastien",
-//     trophees: 1690,
-//   },
-//   {
-//     id: 4,
-//     userName: "Bernardo",
-//     trophees: 2560,
-//   },
-//   {
-//     id: 5,
-//     userName: "Carla",
-//     trophees: 2648,
-//   },
-//   {
-//     id: 6,
-//     userName: "Gianni",
-//     trophees: 1247,
-//   },
-//   {
-//     id: 7,
-//     userName: "Hugo",
-//     trophees: 1,
-//   },
-//   {
-//     id: 8,
-//     userName: "Vlad",
-//     trophees: 659,
-//   },
-//   {
-//     id: 9,
-//     userName: "Cyrine",
-//     trophees: 2168,
-//   },
-//   {
-//     id: 10,
-//     userName: "Nans",
-//     trophees: 2560,
-//   },
-//   {
-//     id: 11,
-//     userName: "Michel",
-//     trophees: 3659,
-//   },
-// ];
-
 const sortedUsers = computed(() => {
-  return [...userList.value].sort((a, b) => b.points - a.points).slice(0, 10);
+  return [...userList.value].sort((a, b) => b.points - a.points).slice(0, 15);
 });
 </script>
 
@@ -160,8 +103,10 @@ const sortedUsers = computed(() => {
 .trophee-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
+  flex: 1 1 0%;
+  overflow: auto;
 
   hr {
     height: 1px;

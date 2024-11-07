@@ -20,6 +20,9 @@
 </template>
 
 <script lang="ts" setup>
+// definePageMeta({
+//   middleware: "auth",
+// });
 useHead({
   title: "defis - Ecosphere",
   meta: [{ name: "description", content: "This is the défis page" }],

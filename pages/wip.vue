@@ -1,37 +1,29 @@
 <template>
   <div class="container">
     <Header />
-
     <div class="milieu">
       <h1 class="titre">Coming soon ...</h1>
-
       <br />
-
       <img
         class="creusement"
         src="/public/imgs/creusement.png"
         alt="icon travaux"
       />
-
       <br />
-
       <p class="explication">
         Page en cours de <br />
         développement
       </p>
-
       <br />
-
-      <button><a href=""></a>Accueil</button>
+      <a href="/">Accueil</a>
     </div>
-
     <Footer />
   </div>
 </template>
 
 <script lang="ts" setup></script>
 
-<style>
+<style scoped>
 .container {
   display: flex;
   padding-top: 5px;
@@ -52,16 +44,25 @@
   width: 80px;
 }
 
-button {
+a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 20px;
   background-color: #2e5632;
   color: #fff;
   font-weight: bold;
   width: 210px;
-  height: 51px;
+  height: 40px;
   font-weight: bold;
   font-size: 1.2em;
   margin: 5px;
+  transition: 0.4s;
+}
+
+a:hover {
+  background-color: #85dd72;
+  color: #2e5632;
 }
 .titre {
   font-weight: bold;

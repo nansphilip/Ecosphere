@@ -1,6 +1,6 @@
 <template>
   <nav class="footer-container flex flex-row gap-4 justify-center">
-    <NuxtLink to="/news"
+    <NuxtLink to="/"
       ><img src="/public/imgs/home.png" alt="logo home"
     /></NuxtLink>
     <NuxtLink to="/defi"

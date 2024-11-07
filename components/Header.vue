@@ -5,7 +5,7 @@
       <h1>Ecosphere</h1>
       <span>Votre assistant écologique</span>
     </div>
-    <a href="#"
+    <a href="/wip"
       ><span class="points"
         ><span class="points-typo">{{ user.points }}</span>
         <img src="/public/imgs/coeurfeuille.png" alt="feuille icon" /></span

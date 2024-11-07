@@ -18,6 +18,7 @@ body {
   font-family: "Montserrat", sans-serif;
   .container-phone {
     display: flex;
+    overflow: hidden;
     flex-direction: column;
     justify-content: space-between;
     width: 375px;

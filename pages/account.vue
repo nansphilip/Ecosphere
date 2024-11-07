@@ -7,23 +7,23 @@
     <div class="account-part account-part-2">
       <h3>Mon compte</h3>
       <ul>
-        <li><a class="link" href="#">Mes informations</a></li>
+        <li><a class="link" href="/wip">Mes informations</a></li>
         <hr />
-        <li><a class="link" href="#">Modifier mon mot de passe</a></li>
+        <li><a class="link" href="/wip">Modifier mon mot de passe</a></li>
         <hr />
-        <li><a class="link" href="#">Parrainage</a></li>
+        <li><a class="link" href="/wip">Parrainage</a></li>
       </ul>
     </div>
     <div class="account-part account-part-3 link">
       <h3>Support / Aide</h3>
       <ul>
-        <li><a class="link" href="#">Contactez le support</a></li>
+        <li><a class="link" href="/wip">Contactez le support</a></li>
         <hr />
-        <li><a class="link" href="#">Politique de confidentialité</a></li>
+        <li><a class="link" href="/wip">Politique de confidentialité</a></li>
         <hr />
-        <li><a class="link" href="#">Parrainage</a></li>
+        <li><a class="link" href="/wip">Parrainage</a></li>
         <hr />
-        <li><a class="link" href="#">Supprimer mon compte</a></li>
+        <li><a class="link" href="/wip">Supprimer mon compte</a></li>
       </ul>
     </div>
     <button class="deconnect-button">Se déconnecter</button>
@@ -36,6 +36,10 @@ useHead({
   title: "Account - Ecosphere",
   meta: [{ name: "description", content: "This is the Account page" }],
 });
+
+// definePageMeta({
+//   middleware: "auth",
+// });
 
 const user = reactive({
   pseudo: "Michel",
