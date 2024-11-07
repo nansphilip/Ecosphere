@@ -9,7 +9,7 @@
     </div>
     <div class="challenge-finished">
       <h3>Défis terminés</h3>
-      <div class="challenge" v-for="recentTask in recentTasks">
+      <div class="challenge" v-for="recentTask in finalArrayTasks">
         <img src="/public/imgs/checked.png" alt="icon checked" /><span
           class="line-clamp-2"
           >{{ recentTask.name }}</span
@@ -65,15 +65,30 @@ const mostRecentTaskWithStatusFalse = computed(() => {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
 });
 
-const recentTasks = computed(() => {
+const recentDalyTasks = computed(() => {
   return user.value.dailys
     .filter((task) => task.status === true)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 3);
 });
 
-// console.log(recentTasks);
-// console.log(mostRecentTaskWithStatusFalse);
+const recentWeeklyTasks = computed(() => {
+  return user.value.weeklys
+    .filter((task) => task.status === true)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 3);
+});
+
+const mergedArray = ref([...recentDalyTasks.value, ...recentWeeklyTasks.value]);
+
+const finalArrayTasks = computed(() => {
+  return mergedArray.value
+    .filter((task) => task.status === true)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 3);
+});
+
+console.log(finalArrayTasks.value);
 </script>
 
 <style scoped>
