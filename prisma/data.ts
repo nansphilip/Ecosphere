@@ -14,7 +14,7 @@ export const userData: {
         id: 1,
         username: "user",
         password:
-            "eb3841a40d9eca2bbc5314408aa2d9b5:3af534f79d7a7c59a7d2de8bcb246fe81c232ca80315c3eb563e37f34c8bb9fe9ca3ad456ccb0d303c815cf239cc7bebfe33352ee664e490bda95ceafd2fc9e7",
+            "$2b$10$oeZtwe0ILbxW7v.PBKBLIeHHQROMEo1dZpTpZGeu2GEnqmcQuZ7tu",
         points: 150,
         friends: "2,3,5,7",
     },
@@ -22,7 +22,7 @@ export const userData: {
         id: 2,
         username: "admin",
         password:
-            "572a76ee988aa5655d9365074f38bb4d:8d68bcf63ab0ab080794b4d2a4d66316c120913c81193d1a87be02f832aa0dc3cae646c87726953b78138ebac4a01014c13b2be6b85416e1341877d8f3c07844",
+            "$2b$10$PJtLnkDwa9k4IaR9s379gepxVLNIgmbQhZHZNsd0VyCqi6UQ3.Hpi",
         points: 1000,
         friends: "1,3,4,6,8",
     },
@@ -30,7 +30,7 @@ export const userData: {
         id: 3,
         username: "EcoWarrior",
         password:
-            "eb3841a40d9eca2bbc5314408aa2d9b5:3af534f79d7a7c59a7d2de8bcb246fe81c232ca80315c3eb563e37f34c8bb9fe9ca3ad456ccb0d303c815cf239cc7bebfe33352ee664e490bda95ceafd2fc9e7",
+            "$2b$10$oeZtwe0ILbxW7v.PBKBLIeHHQROMEo1dZpTpZGeu2GEnqmcQuZ7tu",
         points: 1900,
         friends: "1,2,4,5,9",
     },
@@ -38,7 +38,7 @@ export const userData: {
         id: 4,
         username: "GreenThumb",
         password:
-            "eb3841a40d9eca2bbc5314408aa2d9b5:3af534f79d7a7c59a7d2de8bcb246fe81c232ca80315c3eb563e37f34c8bb9fe9ca3ad456ccb0d303c815cf239cc7bebfe33352ee664e490bda95ceafd2fc9e7",
+            "$2b$10$oeZtwe0ILbxW7v.PBKBLIeHHQROMEo1dZpTpZGeu2GEnqmcQuZ7tu",
         points: 3000,
         friends: "2,3,6,7,10",
     },
@@ -46,7 +46,7 @@ export const userData: {
         id: 5,
         username: "NatureLover",
         password:
-            "eb3841a40d9eca2bbc5314408aa2d9b5:3af534f79d7a7c59a7d2de8bcb246fe81c232ca80315c3eb563e37f34c8bb9fe9ca3ad456ccb0d303c815cf239cc7bebfe33352ee664e490bda95ceafd2fc9e7",
+            "$2b$10$oeZtwe0ILbxW7v.PBKBLIeHHQROMEo1dZpTpZGeu2GEnqmcQuZ7tu",
         points: 1850,
         friends: "1,3,8,9,11",
     },
@@ -54,7 +54,7 @@ export const userData: {
         id: 6,
         username: "PlanetProtector",
         password:
-            "eb3841a40d9eca2bbc5314408aa2d9b5:3af534f79d7a7c59a7d2de8bcb246fe81c232ca80315c3eb563e37f34c8bb9fe9ca3ad456ccb0d303c815cf239cc7bebfe33352ee664e490bda95ceafd2fc9e7",
+            "$2b$10$oeZtwe0ILbxW7v.PBKBLIeHHQROMEo1dZpTpZGeu2GEnqmcQuZ7tu",
         points: 1600,
         friends: "2,4,7,10,12",
     },
@@ -62,7 +62,7 @@ export const userData: {
         id: 7,
         username: "EarthSaver",
         password:
-            "eb3841a40d9eca2bbc5314408aa2d9b5:3af534f79d7a7c59a7d2de8bcb246fe81c232ca80315c3eb563e37f34c8bb9fe9ca3ad456ccb0d303c815cf239cc7bebfe33352ee664e490bda95ceafd2fc9e7",
+            "$2b$10$oeZtwe0ILbxW7v.PBKBLIeHHQROMEo1dZpTpZGeu2GEnqmcQuZ7tu",
         points: 2000,
         friends: "1,4,6,8,13",
     },
@@ -70,7 +70,7 @@ export const userData: {
         id: 8,
         username: "TreeHugger",
         password:
-            "eb3841a40d9eca2bbc5314408aa2d9b5:3af534f79d7a7c59a7d2de8bcb246fe81c232ca80315c3eb563e37f34c8bb9fe9ca3ad456ccb0d303c815cf239cc7bebfe33352ee664e490bda95ceafd2fc9e7",
+            "$2b$10$oeZtwe0ILbxW7v.PBKBLIeHHQROMEo1dZpTpZGeu2GEnqmcQuZ7tu",
         points: 2500,
         friends: "2,5,7,9,14",
     },
@@ -78,7 +78,7 @@ export const userData: {
         id: 9,
         username: "OceanDefender",
         password:
-            "eb3841a40d9eca2bbc5314408aa2d9b5:3af534f79d7a7c59a7d2de8bcb246fe81c232ca80315c3eb563e37f34c8bb9fe9ca3ad456ccb0d303c815cf239cc7bebfe33352ee664e490bda95ceafd2fc9e7",
+            "$2b$10$oeZtwe0ILbxW7v.PBKBLIeHHQROMEo1dZpTpZGeu2GEnqmcQuZ7tu",
         points: 1300,
         friends: "3,5,8,10,15",
     },
@@ -86,7 +86,7 @@ export const userData: {
         id: 10,
         username: "SolarChampion",
         password:
-            "eb3841a40d9eca2bbc5314408aa2d9b5:3af534f79d7a7c59a7d2de8bcb246fe81c232ca80315c3eb563e37f34c8bb9fe9ca3ad456ccb0d303c815cf239cc7bebfe33352ee664e490bda95ceafd2fc9e7",
+            "$2b$10$oeZtwe0ILbxW7v.PBKBLIeHHQROMEo1dZpTpZGeu2GEnqmcQuZ7tu",
         points: 1150,
         friends: "4,6,9,11,16",
     },
@@ -94,7 +94,7 @@ export const userData: {
         id: 11,
         username: "RecycleGuru",
         password:
-            "eb3841a40d9eca2bbc5314408aa2d9b5:3af534f79d7a7c59a7d2de8bcb246fe81c232ca80315c3eb563e37f34c8bb9fe9ca3ad456ccb0d303c815cf239cc7bebfe33352ee664e490bda95ceafd2fc9e7",
+            "$2b$10$oeZtwe0ILbxW7v.PBKBLIeHHQROMEo1dZpTpZGeu2GEnqmcQuZ7tu",
         points: 1750,
         friends: "5,10,12,13,17",
     },
@@ -102,7 +102,7 @@ export const userData: {
         id: 12,
         username: "CleanAirAdvocate",
         password:
-            "eb3841a40d9eca2bbc5314408aa2d9b5:3af534f79d7a7c59a7d2de8bcb246fe81c232ca80315c3eb563e37f34c8bb9fe9ca3ad456ccb0d303c815cf239cc7bebfe33352ee664e490bda95ceafd2fc9e7",
+            "$2b$10$oeZtwe0ILbxW7v.PBKBLIeHHQROMEo1dZpTpZGeu2GEnqmcQuZ7tu",
         points: 850,
         friends: "6,11,14,15,18",
     },
@@ -110,7 +110,7 @@ export const userData: {
         id: 13,
         username: "SustainableSam",
         password:
-            "eb3841a40d9eca2bbc5314408aa2d9b5:3af534f79d7a7c59a7d2de8bcb246fe81c232ca80315c3eb563e37f34c8bb9fe9ca3ad456ccb0d303c815cf239cc7bebfe33352ee664e490bda95ceafd2fc9e7",
+            "$2b$10$oeZtwe0ILbxW7v.PBKBLIeHHQROMEo1dZpTpZGeu2GEnqmcQuZ7tu",
         points: 2100,
         friends: "7,11,14,16,19",
     },
@@ -118,7 +118,7 @@ export const userData: {
         id: 14,
         username: "BiodiversityBuff",
         password:
-            "eb3841a40d9eca2bbc5314408aa2d9b5:3af534f79d7a7c59a7d2de8bcb246fe81c232ca80315c3eb563e37f34c8bb9fe9ca3ad456ccb0d303c815cf239cc7bebfe33352ee664e490bda95ceafd2fc9e7",
+            "$2b$10$oeZtwe0ILbxW7v.PBKBLIeHHQROMEo1dZpTpZGeu2GEnqmcQuZ7tu",
         points: 550,
         friends: "8,12,13,15,20",
     },
@@ -126,7 +126,7 @@ export const userData: {
         id: 15,
         username: "ZeroWaste",
         password:
-            "eb3841a40d9eca2bbc5314408aa2d9b5:3af534f79d7a7c59a7d2de8bcb246fe81c232ca80315c3eb563e37f34c8bb9fe9ca3ad456ccb0d303c815cf239cc7bebfe33352ee664e490bda95ceafd2fc9e7",
+            "$2b$10$oeZtwe0ILbxW7v.PBKBLIeHHQROMEo1dZpTpZGeu2GEnqmcQuZ7tu",
         points: 1400,
         friends: "9,12,14,16,17",
     },
@@ -134,7 +134,7 @@ export const userData: {
         id: 16,
         username: "RenewableRanger",
         password:
-            "eb3841a40d9eca2bbc5314408aa2d9b5:3af534f79d7a7c59a7d2de8bcb246fe81c232ca80315c3eb563e37f34c8bb9fe9ca3ad456ccb0d303c815cf239cc7bebfe33352ee664e490bda95ceafd2fc9e7",
+            "$2b$10$oeZtwe0ILbxW7v.PBKBLIeHHQROMEo1dZpTpZGeu2GEnqmcQuZ7tu",
         points: 1250,
         friends: "10,13,15,18,19",
     },
@@ -142,7 +142,7 @@ export const userData: {
         id: 17,
         username: "OrganicFarmer",
         password:
-            "eb3841a40d9eca2bbc5314408aa2d9b5:3af534f79d7a7c59a7d2de8bcb246fe81c232ca80315c3eb563e37f34c8bb9fe9ca3ad456ccb0d303c815cf239cc7bebfe33352ee664e490bda95ceafd2fc9e7",
+            "$2b$10$oeZtwe0ILbxW7v.PBKBLIeHHQROMEo1dZpTpZGeu2GEnqmcQuZ7tu",
         points: 1200,
         friends: "11,15,18,19,20",
     },
@@ -150,7 +150,7 @@ export const userData: {
         id: 18,
         username: "EcoFriendlyFred",
         password:
-            "eb3841a40d9eca2bbc5314408aa2d9b5:3af534f79d7a7c59a7d2de8bcb246fe81c232ca80315c3eb563e37f34c8bb9fe9ca3ad456ccb0d303c815cf239cc7bebfe33352ee664e490bda95ceafd2fc9e7",
+            "$2b$10$oeZtwe0ILbxW7v.PBKBLIeHHQROMEo1dZpTpZGeu2GEnqmcQuZ7tu",
         points: 500,
         friends: "12,16,17,19,20",
     },
@@ -158,7 +158,7 @@ export const userData: {
         id: 19,
         username: "WildlifeWatcher",
         password:
-            "eb3841a40d9eca2bbc5314408aa2d9b5:3af534f79d7a7c59a7d2de8bcb246fe81c232ca80315c3eb563e37f34c8bb9fe9ca3ad456ccb0d303c815cf239cc7bebfe33352ee664e490bda95ceafd2fc9e7",
+            "$2b$10$oeZtwe0ILbxW7v.PBKBLIeHHQROMEo1dZpTpZGeu2GEnqmcQuZ7tu",
         points: 650,
         friends: "13,16,17,18,20",
     },
@@ -166,7 +166,7 @@ export const userData: {
         id: 20,
         username: "GreenPeace",
         password:
-            "eb3841a40d9eca2bbc5314408aa2d9b5:3af534f79d7a7c59a7d2de8bcb246fe81c232ca80315c3eb563e37f34c8bb9fe9ca3ad456ccb0d303c815cf239cc7bebfe33352ee664e490bda95ceafd2fc9e7",
+            "$2b$10$oeZtwe0ILbxW7v.PBKBLIeHHQROMEo1dZpTpZGeu2GEnqmcQuZ7tu",
         points: 1700,
         friends: "14,17,18,19",
     },

@@ -28,6 +28,9 @@ export const GetUserById = async (props: GetUserByIdProps) => {
             id
         }
     });
+    if (!user) {
+        return null;
+    }
     return user;
 }
 

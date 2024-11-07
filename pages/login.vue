@@ -5,8 +5,7 @@
     <hr />
     <span class="subtitle">Votre assistant écologique</span>
     <div class="form-container">
-      <!-- <form action="/submit" @submit.prevent="handleLogin"> -->
-      <form action="/submit">
+      <form @submit.prevent="Login">
         <span>Se connecter</span>
         <div>
           <input
@@ -96,24 +95,24 @@ const Login = async () => {
     }),
   });
 
-  if (response.ok) {
-    if (response.status) {
-      // User created
-      //   authToken.value = response.token;
-      // Redirect
-      router.push("/news");
-    } else {
-      // Can't create user (already exists)
-      alert("Pseudo ou mot de passe incorrect !");
-      // Show a feedback
-      // Reset form values
-      usernameLogin.value = "";
-      passwordLogin.value = "";
-    }
-  } else {
-    alert("Erreur lors de la connexion !");
-    console.error("Failed to login");
-  }
+  // if (response.ok) {
+  //   if (response.status) {
+  //     // User created
+  //     //   authToken.value = response.token;
+  //     // Redirect
+  //     router.push("/news");
+  //   } else {
+  //     // Can't create user (already exists)
+  //     alert("Pseudo ou mot de passe incorrect !");
+  //     // Show a feedback
+  //     // Reset form values
+  //     usernameLogin.value = "";
+  //     passwordLogin.value = "";
+  //   }
+  // } else {
+  //   alert("Erreur lors de la connexion !");
+  //   console.error("Failed to login");
+  // }
 
   // Stop loading
   loadingLogin.value = false;
