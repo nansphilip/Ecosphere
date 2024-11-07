@@ -3,8 +3,8 @@
   <div class="trophee-container">
     <div class="filtre-container">
       <ul>
-        <li><a href="#">Classement mondial</a></li>
-        <li><a href="/tropheeAmi">Mes amis</a></li>
+        <li><a href="#" class="actual-link">Classement mondial</a></li>
+        <li><a href="/friends">Mes amis</a></li>
       </ul>
     </div>
     <table style="border-collapse: collapse; width: 100%">
@@ -88,7 +88,7 @@ definePageMeta({
   middleware: "auth",
 });
 useHead({
-  title: "trophee - Ecosphere",
+  title: "Trophée - Ecosphere",
   meta: [{ name: "description", content: "This is the trophee's page" }],
 });
 
@@ -107,6 +107,11 @@ const sortedUsers = computed(() => {
   align-items: center;
   flex: 1 1 0%;
   overflow: auto;
+
+  .actual-link {
+    font-weight: bold;
+    text-decoration: underline;
+  }
 
   hr {
     height: 1px;

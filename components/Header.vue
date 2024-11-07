@@ -13,11 +13,27 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-const user = reactive({
-  pseudo: "Michel",
-  points: 3659,
+<script setup>
+const user = ref(null);
+
+const cookie = useCookie("auth_token");
+
+const { data: userData, error } = await useFetch("/api/get-user-id", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: {
+    id: cookie.value.id,
+  },
 });
+
+if (userData.value) {
+  user.value = userData.value;
+  // console.log(toRaw(user.value.dailys));
+} else {
+  console.log(error.value);
+}
 </script>
 
 <style scoped>

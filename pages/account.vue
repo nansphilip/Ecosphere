@@ -2,7 +2,7 @@
   <Header />
   <div class="account-container">
     <div class="account-part account-part-1">
-      Hello <span class="pseudo">{{ user.pseudo }}</span> !
+      Hello <span class="pseudo">{{ user.username }}</span> !
     </div>
     <div class="account-part account-part-2">
       <h3>Mon compte</h3>
@@ -26,12 +26,12 @@
         <li><a class="link" href="/wip">Supprimer mon compte</a></li>
       </ul>
     </div>
-    <button class="deconnect-button">Se déconnecter</button>
+    <button class="deconnect-button" @click="killCookie">Se déconnecter</button>
   </div>
   <Footer />
 </template>
 
-<script lang="ts" setup>
+<script setup>
 useHead({
   title: "Account - Ecosphere",
   meta: [{ name: "description", content: "This is the Account page" }],
@@ -41,9 +41,35 @@ definePageMeta({
   middleware: "auth",
 });
 
-const user = reactive({
-  pseudo: "Michel",
+// const user = reactive({
+//   pseudo: "Michel",
+// });
+
+const user = ref(null);
+
+const cookie = useCookie("auth_token");
+
+const { data: userData, error } = await useFetch("/api/get-user-id", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: {
+    id: cookie.value.id,
+  },
 });
+
+if (userData.value) {
+  user.value = userData.value;
+  console.log(toRaw(user.value.dailys));
+} else {
+  console.log(error.value);
+}
+
+const killCookie = () => {
+  cookie.value = null;
+  window.location.reload();
+};
 </script>
 
 <style scoped>

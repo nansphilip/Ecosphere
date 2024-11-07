@@ -82,33 +82,49 @@ useHead({
   ],
 });
 
+const cookie = useCookie("auth_token");
+
+const { data: dataUser, error } = await useFetch(
+  "/api/get-every-user-friends",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: {
+      id: cookie.value.id,
+    },
+  }
+);
+
+const friendList = ref([]);
+
+if (dataUser.value) {
+  friendList.value = dataUser.value;
+} else {
+  console.log(error.value);
+}
+
+const { data: allUsers } = await useFetch("/api/get-every-user");
+
 const activeTab = ref("friends");
 const searchQuery = ref("");
 const suggestions = ref([]);
 
-const friendList = ref([
-  { id: 1, username: "Alice", points: 1000 },
-  { id: 2, username: "Bob", points: 900 },
-  { id: 3, username: "Charlie", points: 850 },
-  { id: 4, username: "Diana", points: 800 },
-  { id: 5, username: "Eve", points: 750 },
-]);
+const filteredFriends = () => {
+  return allUsers.value.filter((user) =>
+    friendList.value.some((friend) => user.id !== friend.id)
+  );
+};
+console.log(filteredFriends);
 
 const sortedFriends = computed(() => {
-  return [...friendList.value].sort((a, b) => b.points - a.points);
+  return filteredFriends.sort((a, b) => b.points - a.points);
 });
-
-const allUsers = [
-  { id: 6, username: "Fred" },
-  { id: 7, username: "George" },
-  { id: 8, username: "Hannah" },
-  { id: 9, username: "Ian" },
-  { id: 10, username: "Jack" },
-];
 
 const fetchSuggestions = () => {
   if (searchQuery.value) {
-    suggestions.value = allUsers.filter((user) =>
+    suggestions.value = allUsers.value.filter((user) =>
       user.username.toLowerCase().includes(searchQuery.value.toLowerCase())
     );
   } else {
@@ -116,15 +132,28 @@ const fetchSuggestions = () => {
   }
 };
 
-const addFriend = (user) => {
+const addFriend = async (user) => {
   if (!friendList.value.some((friend) => friend.id === user.id)) {
-    friendList.value.push({
-      ...user,
-      points: Math.floor(Math.random() * 500 + 500),
+    const friendIdList = friendList.value.map((friend) => friend.id);
+
+    // Add to database
+    await useFetch("/api/add-user-friend", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        userId: cookie.value.id,
+        newFriendList: [...friendIdList, user.id],
+      },
     });
-    alert(`${user.username} a été ajouté à vos amis !`);
-  } else {
-    alert(`${user.username} est déjà dans votre liste d'amis.`);
+
+    // Add to current list
+    friendList.value.push(user);
+
+    // Reset input
+    searchQuery.value = "";
+    suggestions.value = [];
   }
 };
 
