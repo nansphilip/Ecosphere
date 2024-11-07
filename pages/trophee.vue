@@ -84,9 +84,9 @@
 </template>
 
 <script setup>
-// definePageMeta({
-//   middleware: "auth",
-// });
+definePageMeta({
+  middleware: "auth",
+});
 useHead({
   title: "trophee - Ecosphere",
   meta: [{ name: "description", content: "This is the trophee's page" }],

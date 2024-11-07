@@ -20,13 +20,33 @@
 </template>
 
 <script lang="ts" setup>
-// definePageMeta({
-//   middleware: "auth",
-// });
+definePageMeta({
+  middleware: "auth",
+});
 useHead({
   title: "defis - Ecosphere",
   meta: [{ name: "description", content: "This is the défis page" }],
 });
+
+const userToken = useCookie("auth_token");
+
+const data = userToken;
+
+// if (userToken.value) {
+//   console.log("Token trouvé :", userToken.value.data);
+// } else {
+//   console.log("Aucun token trouvé.");
+// }
+
+// Si le cookie contient des données JSON, il faut le parser
+if (userToken.value) {
+  try {
+    const parsedData = JSON.parse(userToken.value);
+    console.log("Données du cookie:", parsedData);
+  } catch (error) {
+    console.error("Erreur de parsing du cookie:", error);
+  }
+}
 
 const dailyChallenge = ref(`Eteindre l'eau en se brossant les dents`);
 const weeklyChallenge = ref("Ramasser 100 bouteilles en plastique");

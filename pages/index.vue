@@ -1,7 +1,7 @@
 <template>
   <div class="news-container">
     <Header />
-    <div class="challenges">
+    <!-- <div class="challenges">
       <ul>
         <li>
           <input
@@ -26,12 +26,12 @@
           </div>
         </li>
       </ul>
-    </div>
+    </div> -->
 
     <main class="main-content">
       <h2>Actualités</h2>
       <div class="news-grid">
-        <div class="news-item" v-for="i in 6" :key="i">
+        <div class="news-item" v-for="i in 8" :key="i">
           <p>Lorem ipsum dolor</p>
         </div>
       </div>
@@ -41,15 +41,23 @@
 </template>
 
 <script lang="ts" setup>
-// definePageMeta({
-//   middleware: "auth",
-// });
+definePageMeta({
+  middleware: "auth",
+});
 
 const defiSemaine = "Ramasser 30 bouteilles en plastique dans la rue";
 const defiJour = "Se laver les dents sans laisser couler l'eau";
 
 const isWeeklyChallengeDone = ref(false);
 const isDailyChallengeDone = ref(false);
+
+const userToken = useCookie("auth_token");
+
+// if (userToken.value) {
+//   console.log("Token trouvé :", userToken.value);
+// } else {
+//   console.log("Aucun token trouvé.");
+// }
 </script>
 
 <style scoped>
@@ -147,6 +155,9 @@ const isDailyChallengeDone = ref(false);
 }
 
 .main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   width: 90%;
   text-align: center;
   align-self: center;

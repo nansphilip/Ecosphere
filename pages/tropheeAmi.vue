@@ -1,72 +1,89 @@
 <template>
-    <Header />
-    <div class="trophee-container">
-      <div class="filtre-container">
-        <ul>
-          <li><a href="/trophee">Classement mondial</a></li>
-          <li><a href="#" :class="{ active: activeTab === 'friends' }" @click="switchTab('friends')">Mes amis</a></li>
-        </ul>
-        <div v-if="activeTab === 'friends'" class="autocomplete-container">
-          <input
-            type="text"
-            v-model="searchQuery"
-            @input="fetchSuggestions"
-            placeholder="ajouter un ami..."
-            class="autocomplete-input"
-          />
-          <!-- Affiche la liste des suggestions si elle n'est pas vide -->
-          <div v-if="suggestions.length" class="suggestions-overlay">
-            <div
-              v-for="user in suggestions"
-              :key="user.id"
-              class="suggestion-item"
-            >
-              <span>{{ user.username }}</span>
-              <button @click="addFriend(user)">ajouter</button>
-            </div>
+  <Header />
+  <div class="trophee-container">
+    <div class="filtre-container">
+      <ul>
+        <li><a href="/trophee">Classement mondial</a></li>
+        <li>
+          <a
+            href="#"
+            :class="{ active: activeTab === 'friends' }"
+            @click="switchTab('friends')"
+            >Mes amis</a
+          >
+        </li>
+      </ul>
+      <div v-if="activeTab === 'friends'" class="autocomplete-container">
+        <input
+          type="text"
+          v-model="searchQuery"
+          @input="fetchSuggestions"
+          placeholder="ajouter un ami..."
+          class="autocomplete-input"
+        />
+        <!-- Affiche la liste des suggestions si elle n'est pas vide -->
+        <div v-if="suggestions.length" class="suggestions-overlay">
+          <div
+            v-for="user in suggestions"
+            :key="user.id"
+            class="suggestion-item"
+          >
+            <span>{{ user.username }}</span>
+            <button @click="addFriend(user)">ajouter</button>
           </div>
         </div>
       </div>
-  
-      <!-- Affiche la table uniquement si aucune suggestion n'est disponible -->
-      <table v-if="activeTab === 'friends' && !suggestions.length" class="leaderboard-table">
-        <thead>
-          <tr>
-            <th>Rang</th>
-            <th>User</th>
-            <th>Feuille</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(user, index) in sortedFriends" :key="user.id">
-            <td v-if="index + 1 <= 3">
-              <img
-                :src="getMedalImage(index + 1)"
-                :alt="`medaille de rang ${index + 1}`"
-                class="medals"
-              />
-            </td>
-            <td v-else>{{ index + 1 }}</td>
-            <td>{{ user.username }}</td>
-            <td>{{ user.points }}</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
-    <Footer />
-  </template>
-  
-  
-  <script setup>
-import { ref, computed } from 'vue';
 
+    <!-- Affiche la table uniquement si aucune suggestion n'est disponible -->
+    <table
+      v-if="activeTab === 'friends' && !suggestions.length"
+      class="leaderboard-table"
+    >
+      <thead>
+        <tr>
+          <th>Rang</th>
+          <th>User</th>
+          <th>Feuille</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(user, index) in sortedFriends" :key="user.id">
+          <td v-if="index + 1 <= 3">
+            <img
+              :src="getMedalImage(index + 1)"
+              :alt="`medaille de rang ${index + 1}`"
+              class="medals"
+            />
+          </td>
+          <td v-else>{{ index + 1 }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.points }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <Footer />
+</template>
+
+<script setup>
+import { ref, computed } from "vue";
+
+definePageMeta({
+  middleware: "auth",
+});
 useHead({
   title: "Trophées - Mes Amis",
-  meta: [{ name: "description", content: "Page de classement des amis sur Ecosphere" }],
+  meta: [
+    {
+      name: "description",
+      content: "Page de classement des amis sur Ecosphere",
+    },
+  ],
 });
 
-const activeTab = ref('friends');
-const searchQuery = ref('');
+const activeTab = ref("friends");
+const searchQuery = ref("");
 const suggestions = ref([]);
 
 const friendList = ref([
@@ -91,7 +108,7 @@ const allUsers = [
 
 const fetchSuggestions = () => {
   if (searchQuery.value) {
-    suggestions.value = allUsers.filter(user =>
+    suggestions.value = allUsers.filter((user) =>
       user.username.toLowerCase().includes(searchQuery.value.toLowerCase())
     );
   } else {
@@ -100,8 +117,11 @@ const fetchSuggestions = () => {
 };
 
 const addFriend = (user) => {
-  if (!friendList.value.some(friend => friend.id === user.id)) {
-    friendList.value.push({ ...user, points: Math.floor(Math.random() * 500 + 500) });
+  if (!friendList.value.some((friend) => friend.id === user.id)) {
+    friendList.value.push({
+      ...user,
+      points: Math.floor(Math.random() * 500 + 500),
+    });
     alert(`${user.username} a été ajouté à vos amis !`);
   } else {
     alert(`${user.username} est déjà dans votre liste d'amis.`);
@@ -110,17 +130,17 @@ const addFriend = (user) => {
 
 // Chemin des images de médailles basé sur le rang
 const getMedalImage = (rank) => {
-  if (rank === 1) return '/imgs/medailles/or.png';
-  if (rank === 2) return '/imgs/medailles/argent.png';
-  if (rank === 3) return '/imgs/medailles/bronze.png';
-  return ''; // Pas d'image pour les rangs supérieurs à 3
+  if (rank === 1) return "/imgs/medailles/or.png";
+  if (rank === 2) return "/imgs/medailles/argent.png";
+  if (rank === 3) return "/imgs/medailles/bronze.png";
+  return ""; // Pas d'image pour les rangs supérieurs à 3
 };
 
 const switchTab = (tab) => {
   activeTab.value = tab;
 };
 </script>
-  
+
 <style scoped>
 .trophee-container {
   display: flex;
@@ -193,7 +213,7 @@ const switchTab = (tab) => {
 }
 
 .suggestion-item button {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
   border: none;
   padding: 5px 10px;

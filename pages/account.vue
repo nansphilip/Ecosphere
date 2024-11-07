@@ -37,9 +37,9 @@ useHead({
   meta: [{ name: "description", content: "This is the Account page" }],
 });
 
-// definePageMeta({
-//   middleware: "auth",
-// });
+definePageMeta({
+  middleware: "auth",
+});
 
 const user = reactive({
   pseudo: "Michel",
