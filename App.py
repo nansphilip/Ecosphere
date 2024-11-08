@@ -5,19 +5,16 @@ from sklearn.ensemble import RandomForestClassifier
 from datetime import datetime
 import random
 
-
-
-
 conn = mysql.connector.connect(
-    host="localhost",      
-    user="root",   
-    password="Vlad1slav17",  
+    host="localhost",
+    port="3306",
+    user="ecosphere-user",   
+    password="ecosphere-password",  
     database="ecosphere-db",
     charset='utf8mb4'
 )
 
 cursor = conn.cursor(dictionary=True)
-
 
 def fetch_user_challenge_data():
     query = """
@@ -35,16 +32,14 @@ def fetch_difficulty_levels():
     levels = cursor.fetchall()
     return [level['difficulty'] for level in levels]
 
-# On excite les données pour pouvoir rentrer hehe
+# On excite les données pour pouvoir rentrer
 data = fetch_user_challenge_data()
 if data.empty:
     print("Aucune donnée trouvée pour l'entraînement.")
 else:
-
     user_success_rates = data.groupby('user_id')['status'].mean().rename("success_rate")
     user_challenge_counts = data.groupby('user_id')['challenge_id'].count().rename("challenge_count")
     user_data = user_success_rates.to_frame().join(user_challenge_counts)
-
 
     data = data.join(user_data, on="user_id")
     
@@ -52,8 +47,6 @@ else:
     y = data['status']
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-
 
     # ET LA ON BAISE
     model = RandomForestClassifier(random_state=42)
@@ -63,11 +56,7 @@ else:
     accuracy = model.score(X_test, y_test)
     print(f"Précision du modèle : {accuracy:.2f}")
 
-
     difficulty_levels = fetch_difficulty_levels()
-
-
-
 
     def recommend_challenge(user_id):
   
@@ -75,11 +64,9 @@ else:
         cursor.execute(delete_query, (user_id,))
         conn.commit()
 
-
         user_info = user_data.loc[user_id]
         user_success_rate = user_info['success_rate']
         user_challenge_count = user_info['challenge_count']
-
 
         recommended_difficulties = []
         for difficulty in difficulty_levels:
@@ -91,10 +78,8 @@ else:
             success_prob = model.predict_proba(prediction_input)[0][1]
             recommended_difficulties.append((difficulty, success_prob))
 
-  
         recommended_difficulties.sort(key=lambda x: x[1], reverse=True)
         best_difficulty = recommended_difficulties[0][0]
-
 
         query = "SELECT * FROM DailyChallenge WHERE difficulty = %s"
         cursor.execute(query, (best_difficulty,))
@@ -114,10 +99,8 @@ else:
         else:
             print(f"Aucun défi disponible pour le niveau de difficulté {best_difficulty} de l'utilisateur {user_id}.")
 
-
     for user_id in user_data.index:
         recommend_challenge(user_id)
-
 
 cursor.close()
 conn.close()
