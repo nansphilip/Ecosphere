@@ -11,7 +11,6 @@
         "fixtures": "tsx prisma/fixtures.tsx"
     },
     "dependencies": {
-        "@nuxt/image": "^1.8.1",
         "@prisma/nuxt": "^0.0.35",
         "@types/bcrypt": "^5.0.2",
         "bcrypt": "^5.1.1",
