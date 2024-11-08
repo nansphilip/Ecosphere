@@ -3,18 +3,24 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from datetime import datetime
+import time
 import random
 
 conn = mysql.connector.connect(
     host="localhost",
-    port="3306",
-    user="ecosphere-user",   
-    password="ecosphere-password",  
+    user="root",
+    password="Vlad1slav17",
     database="ecosphere-db",
     charset='utf8mb4'
 )
 
 cursor = conn.cursor(dictionary=True)
+
+def fetch_all_users():
+    query = "SELECT id FROM User"
+    cursor.execute(query)
+    users = cursor.fetchall()
+    return [user['id'] for user in users]
 
 def fetch_user_challenge_data():
     query = """
@@ -32,75 +38,86 @@ def fetch_difficulty_levels():
     levels = cursor.fetchall()
     return [level['difficulty'] for level in levels]
 
-# On excite les données pour pouvoir rentrer
-data = fetch_user_challenge_data()
-if data.empty:
-    print("Aucune donnée trouvée pour l'entraînement.")
-else:
-    user_success_rates = data.groupby('user_id')['status'].mean().rename("success_rate")
-    user_challenge_counts = data.groupby('user_id')['challenge_id'].count().rename("challenge_count")
-    user_data = user_success_rates.to_frame().join(user_challenge_counts)
+def recommend_challenge(user_id, user_data, model, difficulty_levels):
+    if user_id not in user_data.index:
+        print(f"Aucune donnée disponible pour l'utilisateur {user_id}.")
+        return
 
-    data = data.join(user_data, on="user_id")
-    
-    X = data[['difficulty', 'success_rate', 'challenge_count']]
-    y = data['status']
+    delete_query = "DELETE FROM DailyUser WHERE userId = %s"
+    cursor.execute(delete_query, (user_id,))
+    conn.commit()
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    user_info = user_data.loc[user_id]
+    user_success_rate = user_info['success_rate']
+    user_challenge_count = user_info['challenge_count']
 
-    # ET LA ON BAISE
-    model = RandomForestClassifier(random_state=42)
-    model.fit(X_train, y_train)
+    recommended_difficulties = []
+    for difficulty in difficulty_levels:
+        prediction_input = pd.DataFrame({
+            'difficulty': [difficulty],
+            'success_rate': [user_success_rate],
+            'challenge_count': [user_challenge_count]
+        })
+        
+        proba = model.predict_proba(prediction_input)[0]
+        success_prob = proba[1] if len(proba) > 1 else proba[0]
+        
+        weighted_success_prob = success_prob + random.uniform(-0.1, 0.1)
+        recommended_difficulties.append((difficulty, weighted_success_prob))
 
-    #ON APPELE NOTRE POTE POUR LUI DIRE L EVALUATION DU MODELE A BAISE
-    accuracy = model.score(X_test, y_test)
-    print(f"Précision du modèle : {accuracy:.2f}")
+    recommended_difficulties.sort(key=lambda x: x[1], reverse=True)
 
-    difficulty_levels = fetch_difficulty_levels()
+    top_recommendations = recommended_difficulties[:3]
+    best_difficulty = random.choice(top_recommendations)[0]
 
-    def recommend_challenge(user_id):
-  
-        delete_query = "DELETE FROM RecommendedChallenge WHERE userId = %s"
-        cursor.execute(delete_query, (user_id,))
+    query = "SELECT * FROM DailyChallenge WHERE difficulty = %s"
+    cursor.execute(query, (best_difficulty,))
+    challenges = cursor.fetchall()
+
+    if challenges:
+        challenge = random.choice(challenges)
+        insert_query = """
+            INSERT INTO DailyUser (userId, dailyChallengeId, date, status)
+            VALUES (%s, %s, %s, %s)
+        """
+        current_time = datetime.now()
+        status_value = 0  
+        values = (user_id, challenge['id'], current_time, status_value)
+        cursor.execute(insert_query, values)
         conn.commit()
+        print(f"Recommandation pour l'utilisateur {user_id}: {challenge['name']} - {challenge['description']}")
+    else:
+        print(f"Aucun défi disponible pour le niveau de difficulté {best_difficulty} de l'utilisateur {user_id}.")
 
-        user_info = user_data.loc[user_id]
-        user_success_rate = user_info['success_rate']
-        user_challenge_count = user_info['challenge_count']
+while True:
+    all_users = fetch_all_users()
 
-        recommended_difficulties = []
-        for difficulty in difficulty_levels:
-            prediction_input = pd.DataFrame({
-                'difficulty': [difficulty],
-                'success_rate': [user_success_rate],
-                'challenge_count': [user_challenge_count]
-            })
-            success_prob = model.predict_proba(prediction_input)[0][1]
-            recommended_difficulties.append((difficulty, success_prob))
+    data = fetch_user_challenge_data()
+    if data.empty:
+        print("Aucune donnée trouvée pour l'entraînement.")
+    else:
+        user_success_rates = data.groupby('user_id')['status'].mean().rename("success_rate")
+        user_challenge_counts = data.groupby('user_id')['challenge_id'].count().rename("challenge_count")
+        user_data = user_success_rates.to_frame().join(user_challenge_counts)
 
-        recommended_difficulties.sort(key=lambda x: x[1], reverse=True)
-        best_difficulty = recommended_difficulties[0][0]
+        data = data.join(user_data, on="user_id")
+        
+        X = data[['difficulty', 'success_rate', 'challenge_count']]
+        y = data['status']
 
-        query = "SELECT * FROM DailyChallenge WHERE difficulty = %s"
-        cursor.execute(query, (best_difficulty,))
-        challenges = cursor.fetchall()
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-        if challenges:
-            challenge = random.choice(challenges)  
-            insert_query = """
-                INSERT INTO RecommendedChallenge (userId, dailyChallengeId, date, createdAt, updatedAt)
-                VALUES (%s, %s, %s, %s, %s)
-            """
-            current_time = datetime.now()
-            values = (user_id, challenge['id'], current_time, current_time, current_time)
-            cursor.execute(insert_query, values)
-            conn.commit()
-            print(f"Recommandation pour l'utilisateur {user_id}: {challenge['name']} - {challenge['description']}")
-        else:
-            print(f"Aucun défi disponible pour le niveau de difficulté {best_difficulty} de l'utilisateur {user_id}.")
+        model = RandomForestClassifier(random_state=42)
+        model.fit(X_train, y_train)
 
-    for user_id in user_data.index:
-        recommend_challenge(user_id)
+        accuracy = model.score(X_test, y_test)
+        print(f"Précision du modèle : {accuracy:.2f}")
 
-cursor.close()
-conn.close()
+        difficulty_levels = fetch_difficulty_levels()
+
+        for user_id in all_users:
+            recommend_challenge(user_id, user_data, model, difficulty_levels)
+
+    print("Attends Wesh je me Pause Branlette ! ")
+    time.sleep(180) 
+
