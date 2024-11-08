@@ -21,8 +21,6 @@
         <hr />
         <li><a class="link" href="/wip">Politique de confidentialité</a></li>
         <hr />
-        <li><a class="link" href="/wip">Parrainage</a></li>
-        <hr />
         <li><a class="link" href="/wip">Supprimer mon compte</a></li>
       </ul>
     </div>

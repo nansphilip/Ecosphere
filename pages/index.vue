@@ -32,7 +32,7 @@
       <h2>Actualités</h2>
       <div class="news-grid">
         <NuxtLink
-          :to="{ name: 'article', params: { id: article.id } }"
+          :to="{ name: 'article-id', params: { id: article.id } }"
           :style="`background-image: url(${article.image}); background-size: cover; background-position: center; backdrop-filter: blur(16px);`"
           class="news-item cursor-pointer relative"
           v-for="article in articleList"

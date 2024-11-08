@@ -56,6 +56,7 @@ export const GetUserById = async (props: GetUserByIdProps) => {
           date: true,
           DailyChallenge: {
             select: {
+              id: true,
               name: true,
               description: true,
               difficulty: true,
@@ -71,6 +72,7 @@ export const GetUserById = async (props: GetUserByIdProps) => {
           date: true,
           WeeklyChallenge: {
             select: {
+              id: true,
               name: true,
               description: true,
               difficulty: true,
@@ -94,6 +96,7 @@ export const GetUserById = async (props: GetUserByIdProps) => {
     points: user.points,
     friends: user.friends,
     dailys: user.daily.map((daily) => ({
+      id: daily.DailyChallenge.id,
       name: daily.DailyChallenge.name,
       description: daily.DailyChallenge.description,
       difficulty: daily.DailyChallenge.difficulty,
@@ -103,6 +106,7 @@ export const GetUserById = async (props: GetUserByIdProps) => {
       date: daily.date,
     })),
     weeklys: user.weekly.map((weekly) => ({
+      id: weekly.WeeklyChallenge.id,
       name: weekly.WeeklyChallenge.name,
       description: weekly.WeeklyChallenge.description,
       difficulty: weekly.WeeklyChallenge.difficulty,

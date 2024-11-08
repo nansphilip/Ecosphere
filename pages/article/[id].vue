@@ -4,7 +4,7 @@
 
   <div class="page-container">
     <main class="article">
-      <h2>Titre de l’article</h2>
+      <h2>{{ articleTitle }}</h2>
       <div class="article-image">
         <p>Photo</p>
       </div>
@@ -28,13 +28,22 @@
   <Footer />
 </template>
 
-<script>
+<script setup>
 definePageMeta({
   middleware: "auth",
 });
-export default {
-  name: "ArticlePage",
-};
+
+import { useRoute } from "vue-router";
+
+// Récupération de l'ID à partir de la route
+const route = useRoute();
+const articleId = route.params.id;
+
+const articleImg = ref("");
+const articleTitle = ref("");
+const articleContent = ref("");
+
+console.log(articleId);
 </script>
 
 <style scoped>

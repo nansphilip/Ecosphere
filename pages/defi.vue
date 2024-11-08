@@ -3,17 +3,40 @@
     <Header />
     <div class="challenge-in-progress">
       <h3>Défi Quotidien</h3>
-      <button>{{ mostRecentTaskWithStatusFalse.name }}</button>
+      <!-- <button>{{ mostRecentDailyWithStatusFalse.name }}</button> -->
+      <button @click="updateDaily(mostRecentDailyWithStatusFalse)">
+        <img v-if="mostRecentDailyWithStatusFalse.difficulty === 1" src="/public/imgs/numbers/number1.png"
+          alt="icon number" />
+        <img v-else-if="mostRecentDailyWithStatusFalse.difficulty === 2" src="/public/imgs/numbers/number2.png"
+          alt="icon number" />
+        <img v-else-if="mostRecentDailyWithStatusFalse.difficulty === 3" src="/public/imgs/numbers/number3.png"
+          alt="icon number" />
+        <img v-else-if="mostRecentDailyWithStatusFalse.difficulty === 4" src="/public/imgs/numbers/number4.png"
+          alt="icon number" />
+        <img v-else-if="mostRecentDailyWithStatusFalse.difficulty === 5" src="/public/imgs/numbers/number5.png"
+          alt="icon number" />
+        <span class="line-clamp-2">{{
+          mostRecentDailyWithStatusFalse.name
+        }}</span>
+      </button>
       <h3>Défi Hebdomadaire</h3>
-      <button>{{ user.weeklys[0].name }}</button>
+      <button @click="updateWeekly(mostRecentWeeklyWithStatusFalse)">
+        <img v-if="mostRecentWeeklyWithStatusFalse.difficulty === 1" src="/public/imgs/numbers/number1.png" alt="icon number" />
+        <img v-else-if="mostRecentWeeklyWithStatusFalse.difficulty === 5" src="/public/imgs/numbers/number5.png"
+          alt="icon number" />
+        <img v-else-if="mostRecentWeeklyWithStatusFalse.difficulty === 5" src="/public/imgs/numbers/number5.png"
+          alt="icon number" />
+        <img v-else-if="mostRecentWeeklyWithStatusFalse.difficulty === 5" src="/public/imgs/numbers/number5.png"
+          alt="icon number" />
+        <img v-else-if="mostRecentWeeklyWithStatusFalse.difficulty === 5" src="/public/imgs/numbers/number5.png"
+          alt="icon number" />{{ mostRecentWeeklyWithStatusFalse.name }}
+      </button>
     </div>
     <div class="challenge-finished">
       <h3>Défis terminés</h3>
       <div class="challenge" v-for="recentTask in finalArrayTasks">
-        <img src="/public/imgs/checked.png" alt="icon checked" /><span
-          class="line-clamp-2"
-          >{{ recentTask.name }}</span
-        >
+        <img src="/public/imgs/checked.png" alt="icon checked" />
+        <span class="line-clamp-2">{{ recentTask.name }}</span>
       </div>
     </div>
     <Footer />
@@ -32,6 +55,35 @@ useHead({
 const user = ref(null);
 
 const cookie = useCookie("auth_token");
+
+const updateDaily = async (daily) => {
+  await useFetch("/api/update-daily-user", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: {
+      status: true,
+      userId: user.value.id,
+      dailyChallengeId: daily.id
+    },
+  });
+  window.location.reload();
+};
+const updateWeekly = async (weekly) => {
+  await useFetch("/api/update-weekly-user", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: {
+      status: true,
+      userId: user.value.id,
+      weeklyChallengeId: weekly.id,
+    },
+  });
+  window.location.reload();
+};
 
 const { data: userData, error } = await useFetch("/api/get-user-id", {
   method: "POST",
@@ -55,12 +107,17 @@ if (userData.value) {
 //   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 //   .slice(0, 3);
 
-// const mostRecentTaskWithStatusFalse2 = user.value.dailys
+// const mostRecentDailyWithStatusFalse2 = user.value.dailys
 //   .filter((task) => task.status === false)
 //   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
 
-const mostRecentTaskWithStatusFalse = computed(() => {
+const mostRecentDailyWithStatusFalse = computed(() => {
   return user.value.dailys
+    .filter((task) => task.status === false)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
+});
+const mostRecentWeeklyWithStatusFalse = computed(() => {
+  return user.value.weeklys
     .filter((task) => task.status === false)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
 });
@@ -87,8 +144,6 @@ const finalArrayTasks = computed(() => {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 3);
 });
-
-console.log(finalArrayTasks.value);
 </script>
 
 <style scoped>
@@ -111,6 +166,10 @@ console.log(finalArrayTasks.value);
     justify-content: center;
     align-items: flex-start;
 
+    img {
+      width: 25px;
+    }
+
     button {
       width: 100%;
       height: 50px;
@@ -120,6 +179,12 @@ console.log(finalArrayTasks.value);
       border-radius: 10px;
       font-size: 0.9em;
       transition: 0.4s;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      padding-left: 10px;
+      gap: 10px;
     }
 
     button:hover {
