@@ -5,5 +5,5 @@ import {
 
 export default defineEventHandler(async (event) => {
   const body: UpdateDailyChallengeProps = await readBody(event);
-  // await UpdateDailyChallenge(body);
+  await UpdateDailyChallenge(body);
 });

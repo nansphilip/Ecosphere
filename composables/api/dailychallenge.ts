@@ -21,38 +21,49 @@ export const AddDailyChallenge = async (props: AddDailyChallengeProps) => {
 };
 
 export type UpdateDailyChallengeProps = {
-  userId_dailyChallengeId: any;
   status: boolean;
+  userId: number;
+  dailyChallengeId: number;
 };
 
 export const UpdateDailyChallenge = async (
   props: UpdateDailyChallengeProps
 ) => {
-  const { userId_dailyChallengeId, status } = props;
+  const { status, userId, dailyChallengeId } = props;
+  console.log(status, userId, dailyChallengeId);
   await prisma.dailyUser.update({
     data: {
       status,
     },
     where: {
-      userId_dailyChallengeId,
+      userId_dailyChallengeId: {
+        userId,
+        dailyChallengeId
+      }
     },
   });
 };
+
 export type UpdateWeeklyChallengeProps = {
-  userId_weeklyChallengeId: any;
   status: boolean;
+  userId: number;
+  weeklyChallengeId: number;
 };
 
 export const UpdateWeeklyChallenge = async (
   props: UpdateWeeklyChallengeProps
 ) => {
-  const { userId_weeklyChallengeId, status } = props;
+  const { status, userId, weeklyChallengeId } = props;
+  console.log(status, userId, weeklyChallengeId);
   await prisma.weeklyUser.update({
     data: {
       status,
     },
     where: {
-      userId_weeklyChallengeId,
+      userId_weeklyChallengeId: {
+        userId,
+        weeklyChallengeId
+      }
     },
   });
 };

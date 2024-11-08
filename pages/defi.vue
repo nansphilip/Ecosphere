@@ -3,64 +3,33 @@
     <Header />
     <div class="challenge-in-progress">
       <h3>Défi Quotidien</h3>
-      <!-- <button>{{ mostRecentTaskWithStatusFalse.name }}</button> -->
-      <button @click="updateDaily(mostRecentTaskWithStatusFalse)">
-        <img
-          v-if="mostRecentTaskWithStatusFalse.difficulty === 1"
-          src="/public/imgs/numbers/number1.png"
-          alt="icon number"
-        />
-        <img
-          v-else-if="mostRecentTaskWithStatusFalse.difficulty === 2"
-          src="/public/imgs/numbers/number2.png"
-          alt="icon number"
-        />
-        <img
-          v-else-if="mostRecentTaskWithStatusFalse.difficulty === 3"
-          src="/public/imgs/numbers/number3.png"
-          alt="icon number"
-        />
-        <img
-          v-else-if="mostRecentTaskWithStatusFalse.difficulty === 4"
-          src="/public/imgs/numbers/number4.png"
-          alt="icon number"
-        />
-        <img
-          v-else-if="mostRecentTaskWithStatusFalse.difficulty === 5"
-          src="/public/imgs/numbers/number5.png"
-          alt="icon number"
-        />
+      <!-- <button>{{ mostRecentDailyWithStatusFalse.name }}</button> -->
+      <button @click="updateDaily(mostRecentDailyWithStatusFalse)">
+        <img v-if="mostRecentDailyWithStatusFalse.difficulty === 1" src="/public/imgs/numbers/number1.png"
+          alt="icon number" />
+        <img v-else-if="mostRecentDailyWithStatusFalse.difficulty === 2" src="/public/imgs/numbers/number2.png"
+          alt="icon number" />
+        <img v-else-if="mostRecentDailyWithStatusFalse.difficulty === 3" src="/public/imgs/numbers/number3.png"
+          alt="icon number" />
+        <img v-else-if="mostRecentDailyWithStatusFalse.difficulty === 4" src="/public/imgs/numbers/number4.png"
+          alt="icon number" />
+        <img v-else-if="mostRecentDailyWithStatusFalse.difficulty === 5" src="/public/imgs/numbers/number5.png"
+          alt="icon number" />
         <span class="line-clamp-2">{{
-          mostRecentTaskWithStatusFalse.name
+          mostRecentDailyWithStatusFalse.name
         }}</span>
       </button>
       <h3>Défi Hebdomadaire</h3>
-      <button @click="updateWeekly(recentWeeklyTasks[0])">
-        <img
-          v-if="recentWeeklyTasks[0].difficulty === 1"
-          src="/public/imgs/numbers/number1.png"
-          alt="icon number"
-        />
-        <img
-          v-else-if="recentWeeklyTasks[0].difficulty === 5"
-          src="/public/imgs/numbers/number5.png"
-          alt="icon number"
-        />
-        <img
-          v-else-if="recentWeeklyTasks[0].difficulty === 5"
-          src="/public/imgs/numbers/number5.png"
-          alt="icon number"
-        />
-        <img
-          v-else-if="recentWeeklyTasks[0].difficulty === 5"
-          src="/public/imgs/numbers/number5.png"
-          alt="icon number"
-        />
-        <img
-          v-else-if="recentWeeklyTasks[0].difficulty === 5"
-          src="/public/imgs/numbers/number5.png"
-          alt="icon number"
-        />{{ recentWeeklyTasks[0].name }}
+      <button @click="updateWeekly(mostRecentWeeklyWithStatusFalse)">
+        <img v-if="mostRecentWeeklyWithStatusFalse.difficulty === 1" src="/public/imgs/numbers/number1.png" alt="icon number" />
+        <img v-else-if="mostRecentWeeklyWithStatusFalse.difficulty === 5" src="/public/imgs/numbers/number5.png"
+          alt="icon number" />
+        <img v-else-if="mostRecentWeeklyWithStatusFalse.difficulty === 5" src="/public/imgs/numbers/number5.png"
+          alt="icon number" />
+        <img v-else-if="mostRecentWeeklyWithStatusFalse.difficulty === 5" src="/public/imgs/numbers/number5.png"
+          alt="icon number" />
+        <img v-else-if="mostRecentWeeklyWithStatusFalse.difficulty === 5" src="/public/imgs/numbers/number5.png"
+          alt="icon number" />{{ mostRecentWeeklyWithStatusFalse.name }}
       </button>
     </div>
     <div class="challenge-finished">
@@ -95,9 +64,11 @@ const updateDaily = async (daily) => {
     },
     body: {
       status: true,
-      id: daily.userId_dailyChallengeId,
+      userId: user.value.id,
+      dailyChallengeId: daily.id
     },
   });
+  window.location.reload();
 };
 const updateWeekly = async (weekly) => {
   await useFetch("/api/update-weekly-user", {
@@ -107,9 +78,11 @@ const updateWeekly = async (weekly) => {
     },
     body: {
       status: true,
-      id: weekly.userId_WeeklyChallengeId,
+      userId: user.value.id,
+      weeklyChallengeId: weekly.id,
     },
   });
+  window.location.reload();
 };
 
 const { data: userData, error } = await useFetch("/api/get-user-id", {
@@ -134,12 +107,17 @@ if (userData.value) {
 //   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 //   .slice(0, 3);
 
-// const mostRecentTaskWithStatusFalse2 = user.value.dailys
+// const mostRecentDailyWithStatusFalse2 = user.value.dailys
 //   .filter((task) => task.status === false)
 //   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
 
-const mostRecentTaskWithStatusFalse = computed(() => {
+const mostRecentDailyWithStatusFalse = computed(() => {
   return user.value.dailys
+    .filter((task) => task.status === false)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
+});
+const mostRecentWeeklyWithStatusFalse = computed(() => {
+  return user.value.weeklys
     .filter((task) => task.status === false)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
 });
