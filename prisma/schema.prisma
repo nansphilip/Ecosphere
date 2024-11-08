@@ -2,6 +2,10 @@ generator client_js {
     provider = "prisma-client-js"
 }
 
+generator client {
+  provider = "prisma-client-py"
+}
+
 datasource db {
     provider = "mysql"
     url      = env("DATABASE_URL")
