@@ -8,8 +8,8 @@ import random
 
 conn = mysql.connector.connect(
     host="localhost",
-    user="root",
-    password="Vlad1slav17",
+    user="ecosphere-user",
+    password="ecosphere-password",
     database="ecosphere-db",
     charset='utf8mb4'
 )
@@ -38,9 +38,30 @@ def fetch_difficulty_levels():
     levels = cursor.fetchall()
     return [level['difficulty'] for level in levels]
 
+def assign_simple_challenge(user_id):
+    query = "SELECT * FROM DailyChallenge WHERE difficulty = 1"
+    cursor.execute(query)
+    challenges = cursor.fetchall()
+
+    if challenges:
+        challenge = random.choice(challenges)
+        insert_query = """
+            INSERT INTO DailyUser (userId, dailyChallengeId, date, status)
+            VALUES (%s, %s, %s, %s)
+        """
+        current_time = datetime.now()
+        status_value = 0  
+        values = (user_id, challenge['id'], current_time, status_value)
+        cursor.execute(insert_query, values)
+        conn.commit()
+        print(f"Défi de difficulté 1 attribué à l'utilisateur {user_id}: {challenge['name']} - {challenge['description']}")
+    else:
+        print("Aucun défi de difficulté 1 disponible pour attribution.")
+
 def recommend_challenge(user_id, user_data, model, difficulty_levels):
     if user_id not in user_data.index:
-        print(f"Aucune donnée disponible pour l'utilisateur {user_id}.")
+        print(f"Aucune donnée de défis pour l'utilisateur {user_id}. Attribution d'un défi de difficulté 1.")
+        assign_simple_challenge(user_id)
         return
 
     delete_query = "DELETE FROM DailyUser WHERE userId = %s"
@@ -119,5 +140,4 @@ while True:
             recommend_challenge(user_id, user_data, model, difficulty_levels)
 
     print("Attends Wesh je me Pause Branlette ! ")
-    time.sleep(180) 
-
+    time.sleep(180)  

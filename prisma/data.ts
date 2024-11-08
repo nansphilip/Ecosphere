@@ -12,7 +12,7 @@ export const userData: {
 }[] = [
   {
     id: 1,
-    username: "user",
+    username: "Ecoco",
     password: "$2b$10$oeZtwe0ILbxW7v.PBKBLIeHHQROMEo1dZpTpZGeu2GEnqmcQuZ7tu",
     points: 150,
     friends: "2,3,5,7",
