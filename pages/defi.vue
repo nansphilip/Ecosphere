@@ -3,17 +3,71 @@
     <Header />
     <div class="challenge-in-progress">
       <h3>Défi Quotidien</h3>
-      <button>{{ mostRecentTaskWithStatusFalse.name }}</button>
+      <!-- <button>{{ mostRecentTaskWithStatusFalse.name }}</button> -->
+      <button>
+        <img
+          v-if="mostRecentTaskWithStatusFalse.difficulty === 1"
+          src="/public/imgs/numbers/number1.png"
+          alt="icon number"
+        />
+        <img
+          v-else-if="mostRecentTaskWithStatusFalse.difficulty === 2"
+          src="/public/imgs/numbers/number2.png"
+          alt="icon number"
+        />
+        <img
+          v-else-if="mostRecentTaskWithStatusFalse.difficulty === 3"
+          src="/public/imgs/numbers/number3.png"
+          alt="icon number"
+        />
+        <img
+          v-else-if="mostRecentTaskWithStatusFalse.difficulty === 4"
+          src="/public/imgs/numbers/number4.png"
+          alt="icon number"
+        />
+        <img
+          v-else-if="mostRecentTaskWithStatusFalse.difficulty === 5"
+          src="/public/imgs/numbers/number5.png"
+          alt="icon number"
+        />
+        <span class="line-clamp-2">{{
+          mostRecentTaskWithStatusFalse.name
+        }}</span>
+      </button>
       <h3>Défi Hebdomadaire</h3>
-      <button>{{ user.weeklys[0].name }}</button>
+      <button>
+        <img
+          v-if="recentWeeklyTasks[0].difficulty === 1"
+          src="/public/imgs/numbers/number1.png"
+          alt="icon number"
+        />
+        <img
+          v-else-if="recentWeeklyTasks[0].difficulty === 5"
+          src="/public/imgs/numbers/number5.png"
+          alt="icon number"
+        />
+        <img
+          v-else-if="recentWeeklyTasks[0].difficulty === 5"
+          src="/public/imgs/numbers/number5.png"
+          alt="icon number"
+        />
+        <img
+          v-else-if="recentWeeklyTasks[0].difficulty === 5"
+          src="/public/imgs/numbers/number5.png"
+          alt="icon number"
+        />
+        <img
+          v-else-if="recentWeeklyTasks[0].difficulty === 5"
+          src="/public/imgs/numbers/number5.png"
+          alt="icon number"
+        />{{ recentWeeklyTasks[0].name }}
+      </button>
     </div>
     <div class="challenge-finished">
       <h3>Défis terminés</h3>
       <div class="challenge" v-for="recentTask in finalArrayTasks">
-        <img src="/public/imgs/checked.png" alt="icon checked" /><span
-          class="line-clamp-2"
-          >{{ recentTask.name }}</span
-        >
+        <img src="/public/imgs/checked.png" alt="icon checked" />
+        <span class="line-clamp-2">{{ recentTask.name }}</span>
       </div>
     </div>
     <Footer />
@@ -87,8 +141,6 @@ const finalArrayTasks = computed(() => {
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 3);
 });
-
-console.log(finalArrayTasks.value);
 </script>
 
 <style scoped>
@@ -111,6 +163,10 @@ console.log(finalArrayTasks.value);
     justify-content: center;
     align-items: flex-start;
 
+    img {
+      width: 25px;
+    }
+
     button {
       width: 100%;
       height: 50px;
@@ -120,6 +176,12 @@ console.log(finalArrayTasks.value);
       border-radius: 10px;
       font-size: 0.9em;
       transition: 0.4s;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      padding-left: 10px;
+      gap: 10px;
     }
 
     button:hover {
