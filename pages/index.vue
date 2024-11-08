@@ -1,6 +1,6 @@
 <template>
+  <Header />
   <div class="news-container">
-    <Header />
     <!-- <div class="challenges">
       <ul>
         <li>
@@ -31,13 +31,24 @@
     <main class="main-content">
       <h2>Actualités</h2>
       <div class="news-grid">
-        <div class="news-item" v-for="i in 8" :key="i">
-          <p>Lorem ipsum dolor</p>
-        </div>
+        <NuxtLink
+          :to="{ name: 'article', params: { id: article.id } }"
+          :style="`background-image: url(${article.image}); background-size: cover; background-position: center; backdrop-filter: blur(16px);`"
+          class="news-item cursor-pointer relative"
+          v-for="article in articleList"
+          :key="article.id"
+        >
+          <p
+            class="text-white font-bold line-clamp-3"
+            style="text-shadow: 0px 0px 4px rgba(0, 0, 0, 0.7)"
+          >
+            {{ article.title }}
+          </p>
+        </NuxtLink>
       </div>
     </main>
-    <Footer />
   </div>
+  <Footer />
 </template>
 
 <script lang="ts" setup>
@@ -45,27 +56,17 @@ definePageMeta({
   middleware: "auth",
 });
 
-const defiSemaine = "Ramasser 30 bouteilles en plastique dans la rue";
-const defiJour = "Se laver les dents sans laisser couler l'eau";
-
-const isWeeklyChallengeDone = ref(false);
-const isDailyChallengeDone = ref(false);
-
-const userToken = useCookie("auth_token");
-
-// if (userToken.value) {
-//   console.log("Token trouvé :", userToken.value);
-// } else {
-//   console.log("Aucun token trouvé.");
-// }
+const { data: articleList } = await useFetch("/api/get-every-article");
 </script>
 
 <style scoped>
 .news-container {
-  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: start;
+  align-items: center;
+  flex: 1 1 0%;
+  overflow: auto;
 }
 
 .page-container {
@@ -161,6 +162,7 @@ const userToken = useCookie("auth_token");
   width: 90%;
   text-align: center;
   align-self: center;
+  margin-bottom: 20px;
 }
 
 .main-content h2 {

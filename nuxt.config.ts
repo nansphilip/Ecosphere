@@ -16,7 +16,7 @@ export default defineNuxtConfig({
             ],
         },
     },
-    modules: ["@nuxtjs/tailwindcss", "@prisma/nuxt"],
+    modules: ["@nuxtjs/tailwindcss", "@prisma/nuxt", "@nuxt/image"],
     compatibilityDate: "2024-04-03",
     devtools: { enabled: true },
 });
