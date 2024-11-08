@@ -3,45 +3,92 @@
     <Header />
     <div class="challenge-in-progress">
       <h3>Défi Quotidien</h3>
-      <button>{{ dailyChallenge }}</button>
+      <button>{{ mostRecentTaskWithStatusFalse.name }}</button>
       <h3>Défi Hebdomadaire</h3>
-      <button>{{ weeklyChallenge }}</button>
+      <button>{{ user.weeklys[0].name }}</button>
     </div>
     <div class="challenge-finished">
       <h3>Défis terminés</h3>
-      <div class="challenge" v-for="challenge in listFinishedChallenges">
-        <img src="/public/imgs/checked.png" alt="icon checked" />{{
-          challenge.name
-        }}
+      <div class="challenge" v-for="recentTask in finalArrayTasks">
+        <img src="/public/imgs/checked.png" alt="icon checked" /><span
+          class="line-clamp-2"
+          >{{ recentTask.name }}</span
+        >
       </div>
     </div>
     <Footer />
   </div>
 </template>
 
-<script lang="ts" setup>
-// definePageMeta({
-//   middleware: "auth",
-// });
+<script setup>
+definePageMeta({
+  middleware: "auth",
+});
 useHead({
-  title: "defis - Ecosphere",
+  title: "Defis - Ecosphere",
   meta: [{ name: "description", content: "This is the défis page" }],
 });
 
-const dailyChallenge = ref(`Eteindre l'eau en se brossant les dents`);
-const weeklyChallenge = ref("Ramasser 100 bouteilles en plastique");
+const user = ref(null);
 
-const listFinishedChallenges = reactive([
-  {
-    name: "Défi numero 1",
+const cookie = useCookie("auth_token");
+
+const { data: userData, error } = await useFetch("/api/get-user-id", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
   },
-  {
-    name: "Défi numero 2",
+  body: {
+    id: cookie.value.id,
   },
-  {
-    name: "Défi numero 3",
-  },
-]);
+});
+
+if (userData.value) {
+  user.value = userData.value;
+  // console.log(toRaw(user.value.dailys));
+} else {
+  console.log(error.value);
+}
+
+// const recentTasks2 = user.value.dailys
+//   .filter((task) => task.status === true)
+//   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+//   .slice(0, 3);
+
+// const mostRecentTaskWithStatusFalse2 = user.value.dailys
+//   .filter((task) => task.status === false)
+//   .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
+
+const mostRecentTaskWithStatusFalse = computed(() => {
+  return user.value.dailys
+    .filter((task) => task.status === false)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0];
+});
+
+const recentDalyTasks = computed(() => {
+  return user.value.dailys
+    .filter((task) => task.status === true)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 3);
+});
+
+const recentWeeklyTasks = computed(() => {
+  return user.value.weeklys
+    .filter((task) => task.status === true)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 3);
+});
+
+const mergedArray = ref([...recentDalyTasks.value, ...recentWeeklyTasks.value]);
+
+const finalArrayTasks = computed(() => {
+  return mergedArray.value
+    .filter((task) => task.status === true)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 3);
+});
+
+console.log(finalArrayTasks.value);
 </script>
 
 <style scoped>
@@ -50,10 +97,12 @@ const listFinishedChallenges = reactive([
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
   h3 {
     font-size: 1.5em;
     font-weight: bold;
   }
+
   .challenge-in-progress {
     display: flex;
     gap: 10px;
@@ -77,6 +126,7 @@ const listFinishedChallenges = reactive([
       background-color: #aeeca1;
     }
   }
+
   .challenge-finished {
     display: flex;
     gap: 10px;
@@ -89,7 +139,7 @@ const listFinishedChallenges = reactive([
       display: flex;
       gap: 10px;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       width: 100%;
       height: 50px;
       background-color: #2e5632;
@@ -97,6 +147,7 @@ const listFinishedChallenges = reactive([
       font-size: 0.9em;
       color: #85dd72;
       font-weight: bold;
+      padding-left: 10px;
 
       img {
         width: 25px;

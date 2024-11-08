@@ -29,9 +29,9 @@
 </template>
 
 <script>
-// definePageMeta({
-//   middleware: "auth",
-// });
+definePageMeta({
+  middleware: "auth",
+});
 export default {
   name: "ArticlePage",
 };
