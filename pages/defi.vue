@@ -4,7 +4,7 @@
     <div class="challenge-in-progress">
       <h3>Défi Quotidien</h3>
       <!-- <button>{{ mostRecentTaskWithStatusFalse.name }}</button> -->
-      <button>
+      <button @click="updateDaily(mostRecentTaskWithStatusFalse)">
         <img
           v-if="mostRecentTaskWithStatusFalse.difficulty === 1"
           src="/public/imgs/numbers/number1.png"
@@ -35,7 +35,7 @@
         }}</span>
       </button>
       <h3>Défi Hebdomadaire</h3>
-      <button>
+      <button @click="updateWeekly(recentWeeklyTasks[0])">
         <img
           v-if="recentWeeklyTasks[0].difficulty === 1"
           src="/public/imgs/numbers/number1.png"
@@ -86,6 +86,31 @@ useHead({
 const user = ref(null);
 
 const cookie = useCookie("auth_token");
+
+const updateDaily = async (daily) => {
+  await useFetch("/api/update-daily-user", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: {
+      status: true,
+      id: daily.userId_dailyChallengeId,
+    },
+  });
+};
+const updateWeekly = async (weekly) => {
+  await useFetch("/api/update-weekly-user", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: {
+      status: true,
+      id: weekly.userId_WeeklyChallengeId,
+    },
+  });
+};
 
 const { data: userData, error } = await useFetch("/api/get-user-id", {
   method: "POST",
